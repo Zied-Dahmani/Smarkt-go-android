@@ -10,14 +10,12 @@ import com.esprit.smarktgo.R
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    var handler: Handler
+    private lateinit var handler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-    }
 
-    init{
         handler = Handler()
         handler.postDelayed({
             val intent = Intent(this, MainActivity::class.java)
@@ -25,7 +23,8 @@ class SplashScreenActivity : AppCompatActivity() {
             finish()
         },3000)
     }
-    
+
+
 }
 
 
