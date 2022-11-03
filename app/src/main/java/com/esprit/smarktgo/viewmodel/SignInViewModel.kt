@@ -19,7 +19,6 @@ class SignInViewModel(signInActivity: SignInActivity) {
     init{
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         mGoogleSignInClient = GoogleSignIn.getClient(signInActivity, gso);
-        Log.d(ContentValues.TAG,"Value of a asdada")
     }
 
     public fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {

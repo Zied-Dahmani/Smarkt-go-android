@@ -27,7 +27,7 @@ class SignInActivity : AppCompatActivity() {
         signInViewModel= SignInViewModel(this)
 
         binding.googleButton.setOnClickListener {
-        signIn()
+            signIn()
         }
 
         binding.signOut.setOnClickListener {
