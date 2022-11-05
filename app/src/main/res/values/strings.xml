@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Smarkt Go</string>
+    <string name="mustNotBeEmpty">Field must not be empty!</string>
+    <string name="invalidPhoneNumber">Type a valid phone number!</string>
+
+
 </resources>
