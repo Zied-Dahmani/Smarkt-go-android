@@ -23,6 +23,7 @@ class SignInActivity : AppCompatActivity() {
 
     lateinit var signInViewModel : SignInViewModel
     private lateinit var binding : ActivitySignInBinding
+    val loading = LoadingDialog(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,25 +52,21 @@ class SignInActivity : AppCompatActivity() {
 
         if (requestCode == RC_SIGN_IN) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-
-            val loading = LoadingDialog(this)
             loading.startLoading()
             window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-
-            val result = signInViewModel.handleSignInResult(task)
-
-            if(result)
-            {
-                val intent = Intent(this,MainActivity::class.java)
-                startActivity(intent)
-            }
-            else
-                Toast.makeText(applicationContext,"Failed!",Toast.LENGTH_LONG).show()
-
-            loading.dismiss()
-            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-
+            signInViewModel.handleSignInResult(task)
         }
+    }
+
+    fun navigate(result:Boolean) {
+        loading.dismiss()
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
+        if (result) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        } else
+            Toast.makeText(applicationContext, "Failed!", Toast.LENGTH_LONG).show()
     }
 
 }

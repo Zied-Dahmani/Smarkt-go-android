@@ -1,12 +1,15 @@
 package com.esprit.smarktgo.view
 
+import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.esprit.smarktgo.MainActivity
 import com.esprit.smarktgo.R
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -16,10 +19,19 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+
         handler = Handler()
         handler.postDelayed({
-            val intent = Intent(this, SignInActivity::class.java)
-            startActivity(intent)
+            if (account!=null)
+            {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+            else{
+                val intent = Intent(this, SignInActivity::class.java)
+                startActivity(intent)
+            }
             finish()
         },3000)
     }
