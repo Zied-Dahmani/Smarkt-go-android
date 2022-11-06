@@ -1,3 +1,9 @@
 package com.esprit.smarktgo.model
 
-data class User(val id: String, val fullName:String,val wallet:Float)
+import com.google.gson.annotations.SerializedName
+import java.io.Serializable
+
+data class User(
+    @SerializedName("id") val id: String,
+    @SerializedName ("fullName") val fullName:String,
+    @SerializedName ("wallet") val wallet:Float): Serializable
