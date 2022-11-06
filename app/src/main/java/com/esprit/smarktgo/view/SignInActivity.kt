@@ -1,8 +1,14 @@
 package com.esprit.smarktgo.view
 
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.esprit.smarktgo.MainActivity
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.databinding.ActivitySignInBinding
 import com.esprit.smarktgo.viewmodel.SignInViewModel
@@ -30,9 +36,8 @@ class SignInActivity : AppCompatActivity() {
             signIn()
         }
 
-        binding.signOut.setOnClickListener {
-            signInViewModel.signOut()
-        }
+        binding.phoneButton.setOnClickListener { signInViewModel.signOut() }
+
     }
 
     private fun signIn() {
@@ -46,7 +51,24 @@ class SignInActivity : AppCompatActivity() {
 
         if (requestCode == RC_SIGN_IN) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-            signInViewModel.handleSignInResult(task)
+
+            val loading = LoadingDialog(this)
+            loading.startLoading()
+            window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
+            val result = signInViewModel.handleSignInResult(task)
+
+            if(result)
+            {
+                val intent = Intent(this,MainActivity::class.java)
+                startActivity(intent)
+            }
+            else
+                Toast.makeText(applicationContext,"Failed!",Toast.LENGTH_LONG).show()
+
+            loading.dismiss()
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
         }
     }
 

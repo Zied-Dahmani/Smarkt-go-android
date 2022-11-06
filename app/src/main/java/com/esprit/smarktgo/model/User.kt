@@ -6,4 +6,5 @@ import java.io.Serializable
 data class User(
     @SerializedName("id") val id: String,
     @SerializedName ("fullName") val fullName:String,
-    @SerializedName ("wallet") val wallet:Float): Serializable
+    @SerializedName ("wallet") val wallet:Float
+    ): Serializable
