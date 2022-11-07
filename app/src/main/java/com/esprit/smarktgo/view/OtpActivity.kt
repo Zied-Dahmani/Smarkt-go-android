@@ -38,7 +38,6 @@ class OtpActivity : AppCompatActivity() {
     }
 
     fun navigate(result:Boolean) {
-
         if (result) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

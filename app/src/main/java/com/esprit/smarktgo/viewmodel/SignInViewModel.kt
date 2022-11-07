@@ -39,15 +39,15 @@ class SignInViewModel(signInActivity: SignInActivity) {
     lateinit var storedVerificationId: String
     lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
 
+
     init{
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-        mGoogleSignInClient = GoogleSignIn.getClient(signInActivity, gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(signInActivity, gso)
         auth = FirebaseAuth.getInstance()
 
         callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                mActivity.navigate(true)
                 Log.d("GFG", "onVerificationCompleted Success")
             }
 
@@ -80,7 +80,7 @@ class SignInViewModel(signInActivity: SignInActivity) {
                 override fun onResponse(call: Call<User>, response: retrofit2.Response<User>) {
 
                     if (response.body()!=null) {
-                        mActivity.navigate(true)
+                        mActivity.navigateToMainActivity(true)
                     }
                     else
                     {
@@ -89,26 +89,25 @@ class SignInViewModel(signInActivity: SignInActivity) {
                         call2.enqueue(object : Callback<User> {
                             override fun onResponse(call: Call<User>, response: retrofit2.Response<User>) {
                                 if (response.isSuccessful) {
-                                    mActivity.navigate(true)
+                                    mActivity.navigateToMainActivity(true)
                                 }
                             }
                             override fun onFailure(call: Call<User>, t: Throwable) {
                                 Log.w(ContentValues.TAG, "Sign Up onFailure")
-                                mActivity.navigate(false)
+                                mActivity.navigateToMainActivity(false)
                             }
                         })
                     }
                 }
                 override fun onFailure(call: Call<User>, t: Throwable) {
                     Log.w(ContentValues.TAG, "Sign In onFailure")
-                    mActivity.navigate(false)
+                    mActivity.navigateToMainActivity(false)
                 }
             })
 
         } catch (e: ApiException) {
             Log.w(ContentValues.TAG, "signInResult:failed code=" + e.statusCode)
-            mActivity.navigate(false)
-
+            mActivity.navigateToMainActivity(false)
         }
     }
 
@@ -132,8 +131,5 @@ class SignInViewModel(signInActivity: SignInActivity) {
         Log.d("GFG" , "Auth started")
     }
 
-    fun signOut() {
-        mGoogleSignInClient.signOut()
-    }
 
 }

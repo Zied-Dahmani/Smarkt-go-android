@@ -36,8 +36,7 @@ class SignInActivity : AppCompatActivity() {
         }
 
         binding.phoneButton.setOnClickListener {
-            phoneNumber= binding.phone.text?.trim().toString()
-            signInViewModel.signInWithphone(phoneNumber)
+            signInWithPhoneNumber()
         }
     }
 
@@ -58,7 +57,7 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    fun navigate(result:Boolean) {
+    fun navigateToMainActivity(result:Boolean) {
         loading.dismiss()
         window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
@@ -70,7 +69,17 @@ class SignInActivity : AppCompatActivity() {
             showToast("Failed!")
     }
 
+    private fun signInWithPhoneNumber() {
+        loading.startLoading()
+        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        phoneNumber= binding.phone.text?.trim().toString()
+        signInViewModel.signInWithphone(phoneNumber)
+    }
+
     fun navigateToOtpActivity(storedVerificationId : String) {
+        loading.dismiss()
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
         val intent = Intent(applicationContext, OtpActivity::class.java)
         intent.putExtra("storedVerificationId",storedVerificationId)
         intent.putExtra("phoneNumber", phoneNumber)
@@ -79,6 +88,11 @@ class SignInActivity : AppCompatActivity() {
 
     fun showToast(text: String)
     {
+        if(text=="Try later!")
+        {
+            loading.dismiss()
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        }
         Toast.makeText(applicationContext, text, Toast.LENGTH_LONG).show()
     }
 

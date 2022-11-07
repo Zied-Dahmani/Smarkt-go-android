@@ -21,12 +21,12 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-        //val account = GoogleSignIn.getLastSignedInAccount(this)
-        val account = FirebaseAuth.getInstance().currentUser
+        val googleAccount = GoogleSignIn.getLastSignedInAccount(this)
+        val phoneAccount = FirebaseAuth.getInstance().currentUser
 
         handler = Handler()
         handler.postDelayed({
-            if (account!=null)
+            if (phoneAccount!=null|| googleAccount?.email !=null)
             {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
@@ -38,7 +38,6 @@ class SplashScreenActivity : AppCompatActivity() {
             finish()
         },3000)
     }
-
 
 }
 
