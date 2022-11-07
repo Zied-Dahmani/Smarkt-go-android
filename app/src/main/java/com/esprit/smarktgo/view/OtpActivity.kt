@@ -1,60 +1,55 @@
+package com.esprit.smarktgo.view
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
+import android.view.WindowManager
 import android.widget.Toast
 import com.esprit.smarktgo.MainActivity
 import com.esprit.smarktgo.R
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthProvider
+import com.esprit.smarktgo.databinding.ActivityOtpBinding
+import com.esprit.smarktgo.viewmodel.OtpViewModel
+
 
 class OtpActivity : AppCompatActivity() {
 
-    // get reference of the firebase auth
-    lateinit var auth: FirebaseAuth
+    private lateinit var binding : ActivityOtpBinding
+    lateinit var otpViewModel : OtpViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
+        setContentView(R.layout.activity_otp)
+        binding = ActivityOtpBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        auth=FirebaseAuth.getInstance()
+        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        binding.toolbar.setNavigationOnClickListener { finish() }
 
-        // get storedVerificationId from the intent
+        otpViewModel = OtpViewModel(this)
         val storedVerificationId= intent.getStringExtra("storedVerificationId")
+        val phoneNumber= intent.getStringExtra("phoneNumber")
 
-        // fill otp and call the on click on button/*
-    /* HOUNI TASTI EL OTP BEL CLICK AAL BUTTON
-        findViewById<Button>(R.id.login).setOnClickListener {
-            val otp = findViewById<EditText>(R.id.et_otp).text.trim().toString()
-            if(otp.isNotEmpty()){
-                val credential : PhoneAuthCredential = PhoneAuthProvider.getCredential(
-                    storedVerificationId.toString(), otp)
-                signInWithPhoneAuthCredential(credential)
-            }else{
-                Toast.makeText(this,"Enter OTP", Toast.LENGTH_SHORT).show()
-            }
+        binding.text.setText("a 6-digit code has been sent to +216 $phoneNumber")
+
+        binding.otpButton.setOnClickListener {
+            val otp = binding.otp.text?.trim().toString()
+            otpViewModel.verifyOTP(otp, storedVerificationId!!)
         }
-        */
     }
-    // verifies if the code matches sent by firebase
-    // if success start the new activity in our case it is main Activity
-    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val intent = Intent(this , MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    // Sign in failed, display a message and update the UI
-                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                        // The verification code entered was invalid
-                        Toast.makeText(this,"Invalid OTP", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
+
+    fun navigate(result:Boolean) {
+
+        if (result) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        } else
+            Toast.makeText(applicationContext, "Failed!", Toast.LENGTH_LONG).show()
     }
+
+    fun showError(errorText : String)
+    {
+        binding.otpContainer.error = errorText
+    }
+
 }

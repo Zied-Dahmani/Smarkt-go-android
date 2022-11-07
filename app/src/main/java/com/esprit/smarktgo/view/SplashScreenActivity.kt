@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.esprit.smarktgo.MainActivity
 import com.esprit.smarktgo.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -19,7 +21,8 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-        val account = GoogleSignIn.getLastSignedInAccount(this)
+        //val account = GoogleSignIn.getLastSignedInAccount(this)
+        val account = FirebaseAuth.getInstance().currentUser
 
         handler = Handler()
         handler.postDelayed({
