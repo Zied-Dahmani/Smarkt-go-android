@@ -3,12 +3,11 @@ package com.esprit.smarktgo.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.WindowManager
-import android.widget.Toast
 import com.esprit.smarktgo.MainActivity
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.databinding.ActivityOtpBinding
 import com.esprit.smarktgo.viewmodel.OtpViewModel
+import com.google.android.material.snackbar.Snackbar
 
 
 class OtpActivity : AppCompatActivity() {
@@ -43,7 +42,7 @@ class OtpActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         } else
-            Toast.makeText(applicationContext, "Failed!", Toast.LENGTH_LONG).show()
+          Snackbar.make(findViewById(R.id.otpConstraintLayout),"Failed!",Snackbar.LENGTH_LONG).show()
     }
 
     fun showError(errorText : String)

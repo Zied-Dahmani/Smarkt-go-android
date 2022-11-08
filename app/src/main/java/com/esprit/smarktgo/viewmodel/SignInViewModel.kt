@@ -22,9 +22,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
+import retrofit2.awaitResponse
 import java.util.concurrent.TimeUnit
 
 class SignInViewModel(signInActivity: SignInActivity) {
@@ -52,7 +57,7 @@ class SignInViewModel(signInActivity: SignInActivity) {
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
-                mActivity.showToast("Try later!")
+                mActivity.showSnackBar("Try later!")
                 Log.d("GFG", "onVerificationFailed  $e")
             }
 
@@ -70,7 +75,6 @@ class SignInViewModel(signInActivity: SignInActivity) {
 
         try {
             val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)
-            //val acct = GoogleSignIn.getLastSignedInAccount(x)
 
             val retroService = RetrofitInstance.getRetroInstance().create(ApiInterface::class.java)
 
@@ -111,13 +115,20 @@ class SignInViewModel(signInActivity: SignInActivity) {
         }
     }
 
-    fun signInWithphone(number: String) {
+    fun signInWithPhoneNumber(number: String)  : Boolean {
         if(number.isEmpty())
+        {
             mActivity.showError("Type your phone number!")
+            return false
+        }
         else if(number.length!=8)
+        {
             mActivity.showError("Type a valid phone number!")
+            return false
+        }
         else
             sendVerificationCode("+216$number")
+        return true
     }
 
     private fun sendVerificationCode(number: String) {

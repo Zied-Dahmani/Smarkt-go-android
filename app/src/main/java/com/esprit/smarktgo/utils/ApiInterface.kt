@@ -13,9 +13,6 @@ interface ApiInterface {
     @POST("user/signUp")
     fun signUp(@Body user: User): Call<User>
 
-   /*@GET("user/signIn")
-    fun signIn(@Body user: User): Call<User>
-*/
    @GET("user/signIn/{user_id}")
    @Headers("Accept:application/json", "Content-Type:application/json", "Authorization: Bearer 73668350bdf06c66f3388408c1a712b378c3e25da599753b21b664a6261e246c")
    fun signIn(@Path("user_id") user_id: String): Call<User>

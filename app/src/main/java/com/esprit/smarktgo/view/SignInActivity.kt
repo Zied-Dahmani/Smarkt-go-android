@@ -3,7 +3,6 @@ package com.esprit.smarktgo.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.esprit.smarktgo.MainActivity
 import com.esprit.smarktgo.R
@@ -12,6 +11,7 @@ import com.esprit.smarktgo.viewmodel.SignInViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
 
 
 const val RC_SIGN_IN = 1001
@@ -66,14 +66,17 @@ class SignInActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         } else
-            showToast("Failed!")
+            showSnackBar("Failed!")
     }
 
     private fun signInWithPhoneNumber() {
-        loading.startLoading()
-        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         phoneNumber= binding.phone.text?.trim().toString()
-        signInViewModel.signInWithphone(phoneNumber)
+        val result = signInViewModel.signInWithPhoneNumber(phoneNumber)
+        if(result)
+        {
+            loading.startLoading()
+            window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        }
     }
 
     fun navigateToOtpActivity(storedVerificationId : String) {
@@ -86,14 +89,14 @@ class SignInActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun showToast(text: String)
+    fun showSnackBar(text: String)
     {
         if(text=="Try later!")
         {
             loading.dismiss()
             window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         }
-        Toast.makeText(applicationContext, text, Toast.LENGTH_LONG).show()
+        Snackbar.make(findViewById(R.id.signInConstraintLayout),text, Snackbar.LENGTH_LONG).show()
     }
 
     fun showError(errorText : String)

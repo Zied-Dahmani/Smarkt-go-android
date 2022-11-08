@@ -32,5 +32,14 @@ class MainActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().signOut()
         }
 
+        binding.bottomNav.setOnItemSelectedListener {
+            when(it.itemId)
+            {
+                R.id.home -> true
+                else -> true
+            }
+            true
+        }
+
     }
 }
