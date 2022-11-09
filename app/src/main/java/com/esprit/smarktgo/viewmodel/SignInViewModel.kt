@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.esprit.smarktgo.model.User
 import com.esprit.smarktgo.repository.UserRepository
-import com.esprit.smarktgo.utils.ApiInterface
-import com.esprit.smarktgo.utils.RetrofitInstance
 import com.esprit.smarktgo.view.SignInActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -21,8 +19,6 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
 import java.util.concurrent.TimeUnit
 
 class SignInViewModel(signInActivity: SignInActivity): ViewModel() {
@@ -30,14 +26,13 @@ class SignInViewModel(signInActivity: SignInActivity): ViewModel() {
     var mGoogleSignInClient: GoogleSignInClient
     var gso: GoogleSignInOptions
 
-    var mActivity = signInActivity
+    val mActivity = signInActivity
     var userRepository: UserRepository
 
     var auth: FirebaseAuth
     var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
     lateinit var storedVerificationId: String
     lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
-
 
     init{
         userRepository = UserRepository()
@@ -46,7 +41,6 @@ class SignInViewModel(signInActivity: SignInActivity): ViewModel() {
         auth = FirebaseAuth.getInstance()
 
         callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
                 Log.d("GFG", "onVerificationCompleted Success")
             }
@@ -65,28 +59,25 @@ class SignInViewModel(signInActivity: SignInActivity): ViewModel() {
             }
         }
     }
+
     fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)
-            val user = User(
-                id = account.email.toString(),
-                fullName = account.displayName.toString(),
-                wallet = 0F
-            )
-            val usersignIn = User(id = account.email.toString(), "", 0F)
+            val user = User(id = account.email.toString(), fullName = account.displayName.toString(), wallet = 0F)
 
             viewModelScope.launch {
-                val signinResult = userRepository.signIn(usersignIn)
-                if (signinResult == null) {
-                    val myTry = userRepository.signUp(user)
-                    mActivity.navigateToMainActivity(true)
+                val signInResult = userRepository.signIn(user)
+                Log.e(ContentValues.TAG, signInResult.toString())
+                if (signInResult==null) {
+                    val signUpResult = userRepository.signUp(user)
+                    if (signUpResult!=null)
+                        mActivity.navigateToMainActivity(true)
+                    else
+                        mActivity.navigateToMainActivity(false)
                 } else {
                     mActivity.navigateToMainActivity(true)
-
                 }
-
             }
-
         } catch (e: ApiException) {
             Log.w(ContentValues.TAG, "signInResult:failed code=" + e.statusCode)
             mActivity.navigateToMainActivity(false)

@@ -6,20 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.esprit.smarktgo.model.User
 import com.esprit.smarktgo.repository.UserRepository
-import com.esprit.smarktgo.utils.ApiInterface
-import com.esprit.smarktgo.utils.RetrofitInstance
 import com.esprit.smarktgo.view.OtpActivity
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
+
 
 class OtpViewModel( otpActivity: OtpActivity): ViewModel() {
 
@@ -38,8 +32,7 @@ class OtpViewModel( otpActivity: OtpActivity): ViewModel() {
         else if (otp.length != 6)
             mActivity.showError("Tye a 6-digit code!")
         else {
-            val credential: PhoneAuthCredential =
-                PhoneAuthProvider.getCredential(storedVerificationId, otp)
+            val credential: PhoneAuthCredential = PhoneAuthProvider.getCredential(storedVerificationId, otp)
             signInWithPhoneAuthCredential(credential)
         }
     }
@@ -59,24 +52,21 @@ class OtpViewModel( otpActivity: OtpActivity): ViewModel() {
     }
 
     fun handleSignInResult() {
-
         try {
             val account = auth.currentUser
-            val retroService = RetrofitInstance.getRetroInstance().create(ApiInterface::class.java)
+            val user = User(account?.phoneNumber.toString(), "", 0F)
 
-            val usertoCheck = User(account?.phoneNumber.toString(), "", 0F)
             viewModelScope.launch {
-                val signinResult = userRepository.signIn(usertoCheck)
-                if (signinResult == null) {
-                    val user =
-                        User(id = account?.phoneNumber.toString(), fullName = "", wallet = 0F)
-                    val myTry = userRepository.signUp(user)
-                    mActivity.navigate(true)
+                val signInResult = userRepository.signIn(user)
+                if (signInResult==null) {
+                    val signUpResult = userRepository.signUp(user)
+                    if (signUpResult!=null)
+                        mActivity.navigate(true)
+                    else
+                        mActivity.navigate(false)
                 } else {
                     mActivity.navigate(true)
-
                 }
-
             }
 
         } catch (e: ApiException) {
