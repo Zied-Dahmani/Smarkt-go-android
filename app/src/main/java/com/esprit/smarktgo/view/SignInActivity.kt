@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.esprit.smarktgo.MainActivity
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.databinding.ActivitySignInBinding
 import com.esprit.smarktgo.viewmodel.SignInViewModel

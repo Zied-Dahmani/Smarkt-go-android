@@ -3,7 +3,6 @@ package com.esprit.smarktgo.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.esprit.smarktgo.MainActivity
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.databinding.ActivityOtpBinding
 import com.esprit.smarktgo.viewmodel.OtpViewModel

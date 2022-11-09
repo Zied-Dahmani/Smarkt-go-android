@@ -1,13 +1,12 @@
-package com.esprit.smarktgo
+package com.esprit.smarktgo.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.fragment.app.Fragment
+import com.esprit.smarktgo.R
 import com.esprit.smarktgo.databinding.ActivityMainBinding
-import com.esprit.smarktgo.view.SignInActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 
@@ -32,14 +31,25 @@ class MainActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().signOut()
         }
 
+        replaceFragment(HomeFragment())
+
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId)
             {
-                R.id.home -> true
+                R.id.home -> replaceFragment(HomeFragment())
                 else -> true
             }
             true
         }
 
+    }
+
+    private fun replaceFragment(fragment: Fragment){
+        val bundle = Bundle()
+        fragment.arguments = bundle
+        val fragmentManager =  supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frameLayout,fragment)
+        fragmentTransaction.commit()
     }
 }

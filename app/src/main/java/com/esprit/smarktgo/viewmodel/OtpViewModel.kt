@@ -2,6 +2,7 @@ package com.esprit.smarktgo.viewmodel
 
 import android.content.ContentValues
 import android.util.Log
+import androidx.lifecycle.ViewModel
 import com.esprit.smarktgo.model.User
 import com.esprit.smarktgo.utils.ApiInterface
 import com.esprit.smarktgo.utils.RetrofitInstance
@@ -17,7 +18,7 @@ import com.google.firebase.auth.PhoneAuthProvider
 import retrofit2.Call
 import retrofit2.Callback
 
-class OtpViewModel( otpActivity: OtpActivity) {
+class OtpViewModel( otpActivity: OtpActivity): ViewModel() {
 
     var auth: FirebaseAuth
     val mActivity = otpActivity
