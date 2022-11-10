@@ -7,16 +7,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.esprit.smarktgo.model.Supermarket
-import com.esprit.smarktgo.model.User
 import com.esprit.smarktgo.repository.SupermarketRepository
-import com.esprit.smarktgo.view.HomeFragment
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import kotlinx.coroutines.launch
 
-class HomeViewModel(homeFragment: HomeFragment): ViewModel() {
+class HomeViewModel: ViewModel() {
 
     private var supermarketsLiveData = MutableLiveData<List<Supermarket>>()
+
+    init {
+        getAll()
+    }
 
     fun getAll() {
         try {
