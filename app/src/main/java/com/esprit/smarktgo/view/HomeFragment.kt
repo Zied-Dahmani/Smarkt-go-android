@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
         rv = view.findViewById(R.id.rv_supermarkets)
         prepareRecyclerView()
 
-        homeViewModel = HomeViewModel()
+        homeViewModel = HomeViewModel(this)
         homeViewModel.observeSupermarketsLiveData().observe(requireActivity(), Observer { list ->
             supermarketAdapter.setList(list)
         })
@@ -40,4 +40,5 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL ,false)
         }
     }
+
 }

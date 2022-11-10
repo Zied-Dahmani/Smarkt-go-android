@@ -67,7 +67,6 @@ class SignInViewModel(signInActivity: SignInActivity): ViewModel() {
 
             viewModelScope.launch {
                 val signInResult = userRepository.signIn(user)
-                Log.e(ContentValues.TAG, signInResult.toString())
                 if (signInResult==null) {
                     val signUpResult = userRepository.signUp(user)
                     if (signUpResult!=null)
