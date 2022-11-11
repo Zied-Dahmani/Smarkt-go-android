@@ -26,8 +26,9 @@ class SupermarketAdapter() : RecyclerView.Adapter<SupermarketViewHolder>() {
 
 
     override fun onBindViewHolder(holder: SupermarketViewHolder, position: Int) {
-        Glide.with(holder.itemView).load("http://192.168.1.4:9090/img/" + list[position].image).into(holder.image)
-        holder.name.text = list[position].name
+        Glide.with(holder.itemView).load("http://192.168.1.4:9090/img/" + list[position].image).into(holder.imageV)
+        holder.nameTV.text = list[position].name
+        holder.addressTV.text = list[position].address
     }
 
     override fun getItemCount(): Int {
@@ -38,12 +39,14 @@ class SupermarketAdapter() : RecyclerView.Adapter<SupermarketViewHolder>() {
 
 
 class SupermarketViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val image : ImageView
-    val name : TextView
+    val imageV : ImageView
+    val nameTV : TextView
+    val addressTV : TextView
 
     init {
-        image = itemView.findViewById(R.id.supermarketImage)
-        name = itemView.findViewById(R.id.supermarketName)
+        imageV = itemView.findViewById(R.id.supermarketImage)
+        nameTV = itemView.findViewById(R.id.supermarketName)
+        addressTV = itemView.findViewById(R.id.supermarketAddress)
     }
 
 }

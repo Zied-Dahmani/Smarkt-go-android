@@ -1,5 +1,4 @@
 package com.esprit.smarktgo.model
-
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 

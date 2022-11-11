@@ -18,4 +18,11 @@ class SupermarketRepository {
         return request.body()
     }
 
+    suspend fun getNearest(coordinates:ArrayList<Int>): MutableList<Supermarket>?
+    {
+        val request =api.getNearest(coordinates)
+
+        if (request.code()!=200) return null
+        return request.body()
+    }
 }

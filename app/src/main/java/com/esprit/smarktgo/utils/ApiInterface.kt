@@ -2,7 +2,6 @@ package com.esprit.smarktgo.utils
 
 import com.esprit.smarktgo.model.Supermarket
 import com.esprit.smarktgo.model.User
-import retrofit2.Call
 import  retrofit2.Response
 import retrofit2.http.*
 
@@ -18,5 +17,7 @@ interface ApiInterface {
     @GET("supermarket/")
     suspend fun getAll():Response<MutableList<Supermarket>>
 
+    @POST("supermarket/")
+    suspend fun getNearest(@Body coordinates:ArrayList<Int>):Response<MutableList<Supermarket>>
 
 }

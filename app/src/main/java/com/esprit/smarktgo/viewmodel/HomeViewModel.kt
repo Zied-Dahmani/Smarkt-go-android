@@ -2,10 +2,13 @@ package com.esprit.smarktgo.viewmodel
 
 import android.content.ContentValues
 import android.content.pm.PackageManager
+import android.location.LocationManager
+import android.os.Handler
+import android.text.BoringLayout
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.esprit.smarktgo.model.Supermarket
@@ -13,19 +16,32 @@ import com.esprit.smarktgo.repository.SupermarketRepository
 import com.esprit.smarktgo.view.HomeFragment
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.launch
+
+import android.content.Context
+import android.location.Location
+import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 
 class HomeViewModel(homeFragment: HomeFragment): ViewModel() {
 
-    private var supermarketsLiveData = MutableLiveData<List<Supermarket>>()
-    val mFragment = homeFragment
-    var fusedLocationProviderClient: FusedLocationProviderClient
+    private val mFragment = homeFragment
+
+    var supermarketsLiveData = MutableLiveData<List<Supermarket>>()
+    private val fusedLocationProviderClient: FusedLocationProviderClient
+    private  var location =  MutableLiveData<Location>()
+    private  val locationManager: LocationManager
+    lateinit var task : Task<Location>
 
     init {
-        getAll()
+        locationManager = mFragment.context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(homeFragment.requireActivity())
         checkLocationPermission()
+        checkLocation()
     }
 
     fun getAll() {
@@ -34,8 +50,7 @@ class HomeViewModel(homeFragment: HomeFragment): ViewModel() {
 
             viewModelScope.launch {
                 val result = supermarketRepository.getAll()
-                if(result!=null)
-                {
+                result.let {
                     supermarketsLiveData.value = result
                 }
             }
@@ -44,13 +59,15 @@ class HomeViewModel(homeFragment: HomeFragment): ViewModel() {
         }
     }
 
-    fun observeSupermarketsLiveData() : LiveData<List<Supermarket>> {
-        return supermarketsLiveData
-    }
+    fun observeSupermarketsLiveData() : LiveData<List<Supermarket>>  = supermarketsLiveData
+
+    fun observeLocationLiveData() : LiveData<Location> = location
+
+
 
     private fun checkLocationPermission()
     {
-        val task = fusedLocationProviderClient.lastLocation
+        task = fusedLocationProviderClient.lastLocation
 
         if(ActivityCompat.checkSelfPermission(mFragment.requireContext(),android.Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mFragment.requireContext(),android.Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -58,13 +75,23 @@ class HomeViewModel(homeFragment: HomeFragment): ViewModel() {
         {
             ActivityCompat.requestPermissions(mFragment.requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),101)
         }
-        task.addOnSuccessListener {
-            if(it!=null)
-            {
-               // mFragment.view?.findViewById<TextView>(R.id.quoteTV)?.setText(it.latitude.toString())
-            }
-        }
         return
     }
 
+    private fun checkLocation(){
+        Handler().postDelayed({
+            if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                task.addOnSuccessListener {
+                    it?.let {
+                        location.value=it
+                    }
+                }
+            }
+            checkLocation()
+        },2500)
+    }
+
+
+
 }
+
