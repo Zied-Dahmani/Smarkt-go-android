@@ -1,6 +1,6 @@
 package com.esprit.smarktgo.adapter
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +12,11 @@ import com.esprit.smarktgo.R
 import com.esprit.smarktgo.model.Supermarket
 import com.esprit.smarktgo.view.HomeFragment
 
-class SupermarketAdapter(val Fragment: HomeFragment) : RecyclerView.Adapter<SupermarketViewHolder>() {
+class SupermarketAdapter(private val mFragment: HomeFragment) : RecyclerView.Adapter<SupermarketViewHolder>() {
 
     private var list = ArrayList<Supermarket>()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setList(list: List<Supermarket>) {
         this.list = list as ArrayList<Supermarket>
         notifyDataSetChanged()
@@ -31,15 +32,13 @@ class SupermarketAdapter(val Fragment: HomeFragment) : RecyclerView.Adapter<Supe
         Glide.with(holder.itemView).load("http://192.168.1.4:9090/img/" + list[position].image).into(holder.imageV)
         holder.nameTV.text = list[position].name
         holder.addressTV.text = list[position].address
-        Glide.with(holder.itemView).load("http://192.168.1.4:9090/img/" + list[position].image).into(holder.image)
-        holder.name.text = list[position].name
-
         holder.itemView.setOnClickListener {
             val image = list[position].image
             val name= list[position].name
             val description =list[position].description
             val address =list[position].address
-            Fragment.detailsList( name,description,address,image)
+            val location = list[position].location
+            mFragment.navigateToSupermarketActivity(name,description,address,image,location)
         }
     }
 
@@ -48,7 +47,6 @@ class SupermarketAdapter(val Fragment: HomeFragment) : RecyclerView.Adapter<Supe
     }
 
 }
-
 
 class SupermarketViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val imageV : ImageView

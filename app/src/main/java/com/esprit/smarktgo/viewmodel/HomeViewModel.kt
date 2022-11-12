@@ -33,29 +33,25 @@ class HomeViewModel(homeFragment: HomeFragment): ViewModel() {
 
     var supermarketsLiveData = MutableLiveData<List<Supermarket>>()
     private val fusedLocationProviderClient: FusedLocationProviderClient
-    private  var location =  MutableLiveData<Location>()
-    private  val locationManager: LocationManager
+    //private  var location =  MutableLiveData<Location>()
+    //private  val locationManager: LocationManager
     lateinit var task : Task<Location>
 
     init {
-        locationManager = mFragment.context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        //locationManager = mFragment.context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(homeFragment.requireActivity())
         checkLocationPermission()
-        checkLocation()
+        getAll()
     }
 
-    fun getAll() {
+    private fun getAll() {
         try {
-
             val supermarketRepository = SupermarketRepository()
 
             viewModelScope.launch {
                 val result = supermarketRepository.getAll()
-
-                if(result!=null)
-                {
-                    supermarketsLiveData.value = result!!
-
+                result.let {
+                    supermarketsLiveData.value = result
                 }
             }
         } catch (e: ApiException) {
@@ -65,9 +61,7 @@ class HomeViewModel(homeFragment: HomeFragment): ViewModel() {
 
     fun observeSupermarketsLiveData() : LiveData<List<Supermarket>>  = supermarketsLiveData
 
-    fun observeLocationLiveData() : LiveData<Location> = location
-
-
+    //fun observeLocationLiveData() : LiveData<Location> = location
 
     private fun checkLocationPermission()
     {
@@ -82,7 +76,7 @@ class HomeViewModel(homeFragment: HomeFragment): ViewModel() {
         return
     }
 
-    private fun checkLocation(){
+    /*private fun checkLocation(){
         Handler().postDelayed({
             if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
                 task.addOnSuccessListener {
@@ -93,7 +87,7 @@ class HomeViewModel(homeFragment: HomeFragment): ViewModel() {
             }
             checkLocation()
         },2500)
-    }
+    }*/
 
 
 

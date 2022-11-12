@@ -1,0 +1,73 @@
+package com.esprit.smarktgo.view
+
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.esprit.smarktgo.R
+import com.esprit.smarktgo.adapter.CategoryAdapter
+import com.esprit.smarktgo.databinding.ActivitySupermarketBinding
+import com.esprit.smarktgo.viewmodel.SupermarketViewModel
+
+
+class SupermarketActivity : AppCompatActivity() {
+
+    private lateinit var binding : ActivitySupermarketBinding
+    private lateinit var supermarketViewModel: SupermarketViewModel
+    private lateinit var categoryAdapter: CategoryAdapter
+
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
+    lateinit var name: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_supermarket)
+        binding = ActivitySupermarketBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        binding.toolbar.setNavigationOnClickListener { finish() }
+
+        name = intent.getStringExtra("name").toString()
+        latitude = intent.getDoubleExtra("latitude",0.0)
+        longitude = intent.getDoubleExtra("longitude",0.0)
+        val description= intent.getStringExtra("description")
+        val address= intent.getStringExtra("address")
+        val image= intent.getStringExtra("image")
+        Glide.with(applicationContext).load("http://192.168.1.4:9090/img/" + image).into(binding.supermarketImage)
+        binding.supermarketName.text = name
+        binding.supermarketAddress.text=address
+        binding.supermarketDescription.text=description
+
+        prepareRecyclerView()
+        supermarketViewModel = SupermarketViewModel()
+        supermarketViewModel.observeCategoriesLiveData().observe(this, Observer { list ->
+            categoryAdapter.setList(list)
+        })
+
+        binding.marker2.setOnClickListener{
+            launchGoogleMaps()
+        }
+    }
+
+    private fun prepareRecyclerView() {
+        categoryAdapter = CategoryAdapter(this)
+        binding.rvCategories.apply {
+            adapter = categoryAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL ,false)
+        }
+    }
+
+    fun launchGoogleMaps()
+    {
+        val supermarketLatitude = latitude
+        val supermarketLongitude = longitude
+        val labelLocation = name
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:<$supermarketLatitude>,<$supermarketLongitude>?q=<$supermarketLatitude>,<$supermarketLongitude>($labelLocation)"))
+        startActivity(intent)
+    }
+}

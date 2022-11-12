@@ -13,5 +13,5 @@ data class Supermarket (
 
 data class Location(
     @SerializedName("type") val type: String,
-    @SerializedName("coordinates") val coordinates: List<Int>
+    @SerializedName("coordinates") val coordinates: List<Double>
     ):Serializable

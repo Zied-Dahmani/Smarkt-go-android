@@ -17,6 +17,9 @@ interface ApiInterface {
     @GET("supermarket/")
     suspend fun getAll():Response<MutableList<Supermarket>>
 
+    @GET("supermarket/getCategories")
+    suspend fun getCategories():Response<MutableList<String>>
+
     @POST("supermarket/")
     suspend fun getNearest(@Body coordinates:ArrayList<Int>):Response<MutableList<Supermarket>>
 
