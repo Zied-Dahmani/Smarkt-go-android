@@ -46,12 +46,16 @@ class HomeViewModel(homeFragment: HomeFragment): ViewModel() {
 
     fun getAll() {
         try {
+
             val supermarketRepository = SupermarketRepository()
 
             viewModelScope.launch {
                 val result = supermarketRepository.getAll()
-                result.let {
-                    supermarketsLiveData.value = result
+
+                if(result!=null)
+                {
+                    supermarketsLiveData.value = result!!
+
                 }
             }
         } catch (e: ApiException) {

@@ -1,5 +1,6 @@
 package com.esprit.smarktgo.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.model.Supermarket
+import com.esprit.smarktgo.view.HomeFragment
 
-class SupermarketAdapter() : RecyclerView.Adapter<SupermarketViewHolder>() {
+class SupermarketAdapter(val Fragment: HomeFragment) : RecyclerView.Adapter<SupermarketViewHolder>() {
 
     private var list = ArrayList<Supermarket>()
 
@@ -29,6 +31,16 @@ class SupermarketAdapter() : RecyclerView.Adapter<SupermarketViewHolder>() {
         Glide.with(holder.itemView).load("http://192.168.1.4:9090/img/" + list[position].image).into(holder.imageV)
         holder.nameTV.text = list[position].name
         holder.addressTV.text = list[position].address
+        Glide.with(holder.itemView).load("http://192.168.1.4:9090/img/" + list[position].image).into(holder.image)
+        holder.name.text = list[position].name
+
+        holder.itemView.setOnClickListener {
+            val image = list[position].image
+            val name= list[position].name
+            val description =list[position].description
+            val address =list[position].address
+            Fragment.detailsList( name,description,address,image)
+        }
     }
 
     override fun getItemCount(): Int {

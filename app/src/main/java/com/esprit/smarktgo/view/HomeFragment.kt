@@ -30,25 +30,26 @@ class HomeFragment : Fragment() {
         textView = view.findViewById(R.id.quoteTV)
 
         prepareRecyclerView()
-
         homeViewModel = HomeViewModel(this)
+        homeViewModel.observeSupermarketsLiveData().observe(requireActivity(), Observer { list ->
+            supermarketAdapter.setList(list)
 
-        homeViewModel.observeLocationLiveData().observe(requireActivity(), Observer { location ->
-            location?.let {
-                textView.text = it.latitude.toString()
-                homeViewModel.getAll()
-                homeViewModel.observeSupermarketsLiveData().observe(requireActivity(), Observer { list ->
-                    supermarketAdapter.setList(list)
-                })
-            }
+
         })
-
-
         return view
     }
+    fun detailsList(name: String, description: String?, address: String?, image: String?) {
+        val intent = Intent(requireContext(), Supermarket::class.java)
 
+        intent.putExtra("name", name)
+        intent.putExtra("description", description)
+        intent.putExtra("address", address)
+        intent.putExtra("image", image)
+
+        startActivity(intent)
+    }
     private fun prepareRecyclerView() {
-        supermarketAdapter = SupermarketAdapter()
+        supermarketAdapter = SupermarketAdapter(this@HomeFragment)
         rv.apply {
             adapter = supermarketAdapter
             layoutManager = LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL ,false)
