@@ -3,6 +3,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class Supermarket (
+    @SerializedName("_id") val id: String,
     @SerializedName("name") val name: String,
     @SerializedName("image") val image:String,
     @SerializedName("description") val description: String,

@@ -44,8 +44,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun navigateToSupermarketActivity(name: String, description: String?, address: String?, image: String?,location: Location) {
+    fun navigateToSupermarketActivity(id: String, name: String, description: String?, address: String?, image: String?,location: Location) {
         val intent = Intent(requireContext(), SupermarketActivity::class.java).apply {
+            putExtra("supermarketId", id)
             putExtra("name", name)
             putExtra("description", description)
             putExtra("address", address)

@@ -33,12 +33,13 @@ class SupermarketAdapter(private val mFragment: HomeFragment) : RecyclerView.Ada
         holder.nameTV.text = list[position].name
         holder.addressTV.text = list[position].address
         holder.itemView.setOnClickListener {
+            val id = list[position].id
             val image = list[position].image
             val name= list[position].name
             val description =list[position].description
             val address =list[position].address
             val location = list[position].location
-            mFragment.navigateToSupermarketActivity(name,description,address,image,location)
+            mFragment.navigateToSupermarketActivity(id,name,description,address,image,location)
         }
     }
 

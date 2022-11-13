@@ -31,13 +31,12 @@ class SupermarketViewModel(): ViewModel()  {
                     categoriesLiveData.value = result
                 }
             }
+
         } catch (e: ApiException) {
             Log.w(ContentValues.TAG, e.statusCode.toString())
         }
     }
 
     fun observeCategoriesLiveData() : LiveData<List<String>> = categoriesLiveData
-
-
 
 }
