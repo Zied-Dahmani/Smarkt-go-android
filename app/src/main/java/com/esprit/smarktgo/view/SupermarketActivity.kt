@@ -45,10 +45,25 @@ class SupermarketActivity : AppCompatActivity() {
         binding.supermarketDescription.text=description
 
         prepareRecyclerView()
-        supermarketViewModel = SupermarketViewModel()
+        supermarketViewModel = SupermarketViewModel(this,supermarketId)
         supermarketViewModel.observeCategoriesLiveData().observe(this, Observer { list ->
             categoryAdapter.setList(list)
         })
+
+        supermarketViewModel.observeIsFavoriteLiveData().observe(this, Observer { isFavorite ->
+            if(isFavorite)
+                binding.favorite.setImageResource(R.drawable.ic_baseline_favorite_filled_24)
+            else
+                binding.favorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+
+        })
+
+        binding.favorite.setOnClickListener {
+            if(supermarketViewModel.isFavorite.value!!)
+            supermarketViewModel.removeFavorite()
+            else
+                supermarketViewModel.addFavorite()
+        }
 
         binding.marker2.setOnClickListener{
             launchGoogleMaps()
