@@ -29,7 +29,7 @@ class SupermarketAdapter(private val mFragment: HomeFragment) : RecyclerView.Ada
 
 
     override fun onBindViewHolder(holder: SupermarketViewHolder, position: Int) {
-        Glide.with(holder.itemView).load("http://192.168.1.4:9090/img/" + list[position].image).into(holder.imageV)
+        Glide.with(holder.itemView).load("http://192.168.1.16:9090/img/" + list[position].image).into(holder.imageV)
         holder.nameTV.text = list[position].name
         holder.addressTV.text = list[position].address
         holder.itemView.setOnClickListener {

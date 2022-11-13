@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId)
             {
                 R.id.home -> replaceFragment(HomeFragment())
-                else -> true
+R.id.profile->replaceFragment(ProfileFragment())
             }
             true
         }
