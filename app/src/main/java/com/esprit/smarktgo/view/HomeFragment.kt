@@ -1,11 +1,13 @@
 package com.esprit.smarktgo.view
 
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -33,6 +35,13 @@ class HomeFragment : Fragment() {
         homeViewModel.observeSupermarketsLiveData().observe(requireActivity(), Observer { list ->
             supermarketAdapter.setList(list)
         })
+
+      val   butt = view.findViewById<ImageView>(R.id.image)
+
+        butt.setOnClickListener {
+            val intent = Intent(requireContext(), ProfileActivity::class.java)
+            startActivity(intent)
+        }
         return view
     }
 

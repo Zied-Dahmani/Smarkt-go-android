@@ -1,19 +1,15 @@
 package com.esprit.smarktgo.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.model.ProfileItem
-import com.esprit.smarktgo.view.SupermarketActivity
 
 class ProfileAdapter(val list: List<ProfileItem>) : RecyclerView.Adapter<ProfileViewHolder>() {
-
 
 
 
@@ -24,8 +20,10 @@ class ProfileAdapter(val list: List<ProfileItem>) : RecyclerView.Adapter<Profile
 
 
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
-        Glide.with(holder.itemView).load("http://192.168.1.16:9090/img/" + list[position].image +".png").into(holder.image)
+        holder.image.setImageResource(list[position].image)
         holder.item.text = list[position].item
+        holder.itemView.setOnClickListener {
+        }
     }
 
     override fun getItemCount(): Int {

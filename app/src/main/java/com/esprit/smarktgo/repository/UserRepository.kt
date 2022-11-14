@@ -25,5 +25,14 @@ class UserRepository {
       if (request.code()!=200) return null
       return request.body()
    }
+   suspend fun updateProfile(@Body userRequest: User):User?
+   {
+      val request =api.updateProfile(userRequest)
+
+      if (request.code()!=200) return null
+      return request.body()
+
+   }
+
 
 }

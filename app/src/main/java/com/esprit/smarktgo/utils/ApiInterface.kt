@@ -23,4 +23,8 @@ interface ApiInterface {
     @POST("supermarket/")
     suspend fun getNearest(@Body coordinates:ArrayList<Int>):Response<MutableList<Supermarket>>
 
+    @PUT("user/update")
+    suspend fun updateProfile(@Body user:User):Response<User>
+
+
 }

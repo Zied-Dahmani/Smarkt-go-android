@@ -18,13 +18,14 @@ class SplashScreenActivity : AppCompatActivity() {
 
         val googleAccount = GoogleSignIn.getLastSignedInAccount(this)
         val phoneAccount = FirebaseAuth.getInstance().currentUser
-
         handler = Handler()
         handler.postDelayed({
             if (phoneAccount!=null|| googleAccount?.email !=null)
             {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+
+
             }
             else{
                 val intent = Intent(this, SignInActivity::class.java)
@@ -32,6 +33,7 @@ class SplashScreenActivity : AppCompatActivity() {
             }
             finish()
         },3000)
+
     }
 
 }

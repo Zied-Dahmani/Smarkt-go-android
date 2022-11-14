@@ -9,24 +9,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.adapter.ProfileAdapter
-import com.esprit.smarktgo.adapter.SupermarketAdapter
 import com.esprit.smarktgo.model.ProfileItem
-import com.esprit.smarktgo.viewmodel.HomeViewModel
-import com.esprit.smarktgo.viewmodel.ProfileViewModel
+import com.esprit.smarktgo.viewmodel.ProfileFragmentViewModel
 
 
 class ProfileFragment: Fragment() {
 
-    private lateinit var profileViewModel: ProfileViewModel
+    private lateinit var profileViewModel: ProfileFragmentViewModel
     lateinit var myRecycler: RecyclerView
     private lateinit var profileAdapter : ProfileAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile,container,false)
         myRecycler = view.findViewById(R.id.profileRecycler)
-        profileViewModel = ProfileViewModel()
+        profileViewModel = ProfileFragmentViewModel()
 
 initRecyclerView()
+
+
 
         return view
     }

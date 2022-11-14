@@ -9,7 +9,9 @@ data class User(
     @SerializedName ("wallet") val wallet:Float
     ): Serializable
 
+
+
 data class ProfileItem (
     val item:String,
-    val image:String
+    val image:Int
         )
