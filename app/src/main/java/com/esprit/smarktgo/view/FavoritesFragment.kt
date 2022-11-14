@@ -71,4 +71,9 @@ class FavoritesFragment : Fragment() {
         textV.isVisible = true
     }
 
+    fun updateList()
+    {
+        favoritesViewModel.getFavorites()
+    }
+
 }

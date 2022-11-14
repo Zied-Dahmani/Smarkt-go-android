@@ -43,6 +43,7 @@ class FavoritesViewModel(favoritesFragment: FavoritesFragment): ViewModel() {
 
     fun getFavorites() {
         try {
+            supermarketsLiveData.value = ArrayList()
             val supermarketRepository = SupermarketRepository()
 
             GoogleSignIn.getLastSignedInAccount(mFragment.requireContext()).let {

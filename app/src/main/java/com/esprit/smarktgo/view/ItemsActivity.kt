@@ -6,17 +6,16 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.esprit.smarktgo.R
-import com.esprit.smarktgo.adapter.CategoryAdapter
 import com.esprit.smarktgo.adapter.ItemAdapter
 import com.esprit.smarktgo.databinding.ActivityItemsBinding
-import com.esprit.smarktgo.databinding.ActivitySupermarketBinding
 import com.esprit.smarktgo.viewmodel.ItemsViewModel
-import com.esprit.smarktgo.viewmodel.SupermarketViewModel
 
 class ItemsActivity : AppCompatActivity() {
     private lateinit var binding : ActivityItemsBinding
     private lateinit var itemViewModel: ItemsViewModel
     private lateinit var itemAdapter: ItemAdapter
+    val orderDialog = OrderDialog(this)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +34,11 @@ class ItemsActivity : AppCompatActivity() {
         itemViewModel.observeItemsLiveData().observe(this, Observer { list ->
             itemAdapter.setList(list)
         })
+
     }
 
     private fun prepareRecyclerView() {
-        itemAdapter = ItemAdapter()
+        itemAdapter = ItemAdapter(this)
         binding.rvItems.apply {
             adapter = itemAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL ,false)

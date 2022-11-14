@@ -19,11 +19,10 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
-class SupermarketViewModel(supermarketActivity: SupermarketActivity,supermarketId:String): ViewModel()  {
+class SupermarketViewModel(supermarketActivity: SupermarketActivity): ViewModel()  {
 
     var categoriesLiveData = MutableLiveData<List<String>>()
     var favorites = MutableLiveData<ArrayList<String>>()
-    private val supermarketId = supermarketId
     lateinit var userId: String
     val mActivity = supermarketActivity
     var isFavorite = MutableLiveData<Boolean>()
@@ -56,7 +55,7 @@ class SupermarketViewModel(supermarketActivity: SupermarketActivity,supermarketI
             }?: run { userId = FirebaseAuth.getInstance().currentUser?.phoneNumber!! }
 
             viewModelScope.launch {
-                val result = supermarketRepository.isFavorite(IsFavoriteBody(supermarketId,userId))
+                val result = supermarketRepository.isFavorite(IsFavoriteBody(mActivity.supermarketId,userId))
                 result.let {
                     favorites.value = result as ArrayList<String>?
                     isFavorite.value = result?.contains(userId)
@@ -85,7 +84,7 @@ class SupermarketViewModel(supermarketActivity: SupermarketActivity,supermarketI
         try {
 
             viewModelScope.launch {
-                supermarketRepository.addRemoveFavorite(AddRemoveFavorite(supermarketId, favorites.value!!))
+                supermarketRepository.addRemoveFavorite(AddRemoveFavorite(mActivity.supermarketId, favorites.value!!))
             }
 
         } catch (e: ApiException) {

@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.model.Item
+import com.esprit.smarktgo.view.ItemsActivity
+import com.esprit.smarktgo.view.SupermarketActivity
 
-class ItemAdapter() : RecyclerView.Adapter<ItemViewHolder>() {
+class ItemAdapter(val mActivity: ItemsActivity) : RecyclerView.Adapter<ItemViewHolder>() {
 
     private var list = ArrayList<Item>()
 
@@ -34,7 +36,8 @@ class ItemAdapter() : RecyclerView.Adapter<ItemViewHolder>() {
         holder.descriptionTV.text = list[position].description
         holder.priceTV.text = "${list[position].price} TND"
         holder.iconCardView.setOnClickListener {
-            //mActivity.navigateToItemsActivity(name,description,address,image)
+            mActivity.orderDialog.price = list[position].price
+            mActivity.orderDialog.show()
         }
     }
 

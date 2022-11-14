@@ -45,7 +45,7 @@ class SupermarketActivity : AppCompatActivity() {
         binding.supermarketDescription.text=description
 
         prepareRecyclerView()
-        supermarketViewModel = SupermarketViewModel(this,supermarketId)
+        supermarketViewModel = SupermarketViewModel(this)
         supermarketViewModel.observeCategoriesLiveData().observe(this, Observer { list ->
             categoryAdapter.setList(list)
         })

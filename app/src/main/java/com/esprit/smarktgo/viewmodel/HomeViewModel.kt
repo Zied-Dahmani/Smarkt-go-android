@@ -73,6 +73,7 @@ class HomeViewModel(homeFragment: HomeFragment): ViewModel() {
         {
             ActivityCompat.requestPermissions(mFragment.requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),101)
         }
+
         return
     }
 

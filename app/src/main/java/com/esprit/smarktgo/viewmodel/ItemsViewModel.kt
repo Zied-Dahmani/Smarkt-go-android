@@ -1,5 +1,6 @@
 package com.esprit.smarktgo.viewmodel
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -8,16 +9,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.esprit.smarktgo.model.Item
 import com.esprit.smarktgo.repository.ItemRepository
-import com.esprit.smarktgo.repository.SupermarketRepository
 import com.esprit.smarktgo.view.ItemsActivity
-import com.esprit.smarktgo.view.MainActivity
 import com.google.android.gms.common.api.ApiException
 import kotlinx.coroutines.launch
 
 class ItemsViewModel(itemsActivity: ItemsActivity): ViewModel()  {
 
     var itemsLiveData = MutableLiveData<List<Item>>()
-    val mActivity = itemsActivity
+    @SuppressLint("StaticFieldLeak")
+    private val mActivity = itemsActivity
 
     fun getItems(category:String,supermarketId:String) {
         try {
