@@ -1,6 +1,8 @@
 package com.esprit.smarktgo.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,7 +27,6 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
         txtFullName = findViewById(R.id.profileFullname)
         fullNameLayout=findViewById(R.id.fullnameLayout)
-
         val save = findViewById<Button>(R.id.editButton)
         val image = findViewById<ImageView>(R.id.profileImage)
         val wallet = findViewById<TextView>(R.id.profileWallet)
@@ -47,16 +48,25 @@ class ProfileActivity : AppCompatActivity() {
 
         })
 
+if (profileViewModel.userId.contains("@"))
+{
+    txtFullName.visibility= View.INVISIBLE
+    save.visibility=View.INVISIBLE
+}
+else {
 
 
-        save.setOnClickListener {
-            val input = txtFullName!!.text.toString()
-            if (validate()) {
-                profileViewModel = ProfileViewModel(this, input)
-                profileViewModel.updateProfile()
-            }}
+    save.setOnClickListener {
+        val input = txtFullName!!.text.toString()
+        if (validate()) {
+            profileViewModel = ProfileViewModel(this, input)
+            profileViewModel.updateProfile()
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+    }
 
-
+}
 
     }
     fun validate ():Boolean{
