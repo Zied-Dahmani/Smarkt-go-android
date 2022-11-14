@@ -9,21 +9,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.model.ProfileItem
 
+
+
 class ProfileAdapter(val list: List<ProfileItem>) : RecyclerView.Adapter<ProfileViewHolder>() {
 
+private lateinit var mListener : onItemClickListener
 
-
+    interface onItemClickListener{
+        fun onItemClick(position: Int)
+    }
+    fun setOnItemClickListener(listener:onItemClickListener)
+    {
+        mListener=listener
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.profile_item, parent, false)
-        return ProfileViewHolder(view)
+        return ProfileViewHolder(view,mListener)
     }
 
 
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
         holder.image.setImageResource(list[position].image)
         holder.item.text = list[position].item
-        holder.itemView.setOnClickListener {
-        }
+
+
     }
 
     override fun getItemCount(): Int {
@@ -32,13 +41,17 @@ class ProfileAdapter(val list: List<ProfileItem>) : RecyclerView.Adapter<Profile
 
 }
 
-class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class ProfileViewHolder(itemView: View,listener: ProfileAdapter.onItemClickListener) : RecyclerView.ViewHolder(itemView) {
     val item : TextView
     val image : ImageView
 
     init {
         image = itemView.findViewById(R.id.profileIcon)
         item = itemView.findViewById(R.id.profileItem)
+        itemView.setOnClickListener {
+            listener.onItemClick(adapterPosition)
+        }
     }
+
 
 }

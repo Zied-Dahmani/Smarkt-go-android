@@ -2,6 +2,8 @@ package com.esprit.smarktgo.utils
 
 import com.esprit.smarktgo.model.Supermarket
 import com.esprit.smarktgo.model.User
+import retrofit2.Call
+import retrofit2.Callback
 import  retrofit2.Response
 import retrofit2.http.*
 
@@ -26,5 +28,7 @@ interface ApiInterface {
     @PUT("user/update")
     suspend fun updateProfile(@Body user:User):Response<User>
 
+    @POST("user/signIn")
+    fun getInfo(@Body user: User): Call<User>
 
 }
