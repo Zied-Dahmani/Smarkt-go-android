@@ -9,7 +9,8 @@ data class Item(
     @SerializedName("description") val description: String,
     @SerializedName("price") val price: Double,
     @SerializedName("category") val category: String,
-    @SerializedName("supermarketId") val supermarketId: String
+    @SerializedName("supermarketId") val supermarketId: String,
+    @SerializedName("quantity") var quantity: Int
 ): Serializable
 
 

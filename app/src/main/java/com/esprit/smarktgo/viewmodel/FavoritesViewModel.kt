@@ -46,9 +46,10 @@ class FavoritesViewModel(favoritesFragment: FavoritesFragment): ViewModel() {
             supermarketsLiveData.value = ArrayList()
             val supermarketRepository = SupermarketRepository()
 
-            GoogleSignIn.getLastSignedInAccount(mFragment.requireContext()).let {
-                userId= it?.email!!
-            }?: run { userId = FirebaseAuth.getInstance().currentUser?.phoneNumber!! }
+            val googleSignIn = GoogleSignIn.getLastSignedInAccount(mFragment.requireContext())
+            userId = if(googleSignIn!=null) {
+                googleSignIn.email!!
+            } else FirebaseAuth.getInstance().currentUser?.phoneNumber!!
 
             viewModelScope.launch {
                 val result = supermarketRepository.getFavorites(User(userId,"",0F))

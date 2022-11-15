@@ -50,9 +50,10 @@ class SupermarketViewModel(supermarketActivity: SupermarketActivity): ViewModel(
 
     private fun isFavorite() {
         try {
-            GoogleSignIn.getLastSignedInAccount(mActivity).let {
-                userId= it?.email!!
-            }?: run { userId = FirebaseAuth.getInstance().currentUser?.phoneNumber!! }
+            val googleSignIn = GoogleSignIn.getLastSignedInAccount(mActivity.baseContext)
+            userId = if(googleSignIn!=null) {
+                googleSignIn.email!!
+            } else FirebaseAuth.getInstance().currentUser?.phoneNumber!!
 
             viewModelScope.launch {
                 val result = supermarketRepository.isFavorite(IsFavoriteBody(mActivity.supermarketId,userId))

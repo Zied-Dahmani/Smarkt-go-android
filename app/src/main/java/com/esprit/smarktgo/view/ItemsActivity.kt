@@ -1,14 +1,17 @@
 package com.esprit.smarktgo.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.adapter.ItemAdapter
 import com.esprit.smarktgo.databinding.ActivityItemsBinding
+import com.esprit.smarktgo.model.Item
 import com.esprit.smarktgo.viewmodel.ItemsViewModel
+import com.google.android.material.snackbar.Snackbar
+
 
 class ItemsActivity : AppCompatActivity() {
     private lateinit var binding : ActivityItemsBinding
@@ -23,9 +26,10 @@ class ItemsActivity : AppCompatActivity() {
         binding = ActivityItemsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbar.setNavigationOnClickListener { finish() }
-
         val category= intent.getStringExtra("category")
+        binding.toolbar.setNavigationOnClickListener { finish() }
+        binding.toolbar.setTitle(category)
+
         val supermarketId= intent.getStringExtra("supermarketId")
         prepareRecyclerView()
         itemViewModel = ItemsViewModel(this)
@@ -50,7 +54,15 @@ class ItemsActivity : AppCompatActivity() {
         binding.noItemsTV.isVisible = true
     }
 
+    fun addToCart(item: Item,quantity: Int)
+    {
+        itemViewModel.addToCart(item,quantity)
+    }
 
+    fun showSuccessSnackBar(text: String)
+    {
+        Snackbar.make(findViewById(R.id.itemsConstraintLayout),text, Snackbar.LENGTH_LONG).show()
+    }
 
 
 }

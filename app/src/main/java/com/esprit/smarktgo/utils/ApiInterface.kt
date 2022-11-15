@@ -34,7 +34,8 @@ interface ApiInterface {
     @POST("item/")
     suspend fun getAllBySupermarketIdAndCategory(@Body itemInfo: ItemInfo):Response<MutableList<Item>>
 
-
+    @POST("order/add")
+    suspend fun addToCart(@Body order: Order): Response<Order>
 }
 
 

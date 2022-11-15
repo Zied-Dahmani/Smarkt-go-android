@@ -36,7 +36,7 @@ class ItemAdapter(val mActivity: ItemsActivity) : RecyclerView.Adapter<ItemViewH
         holder.descriptionTV.text = list[position].description
         holder.priceTV.text = "${list[position].price} TND"
         holder.iconCardView.setOnClickListener {
-            mActivity.orderDialog.price = list[position].price
+            mActivity.orderDialog.item = list[position]
             mActivity.orderDialog.show()
         }
     }

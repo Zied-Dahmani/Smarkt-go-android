@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ItemsActivity">
+    tools:context=".view.ItemsActivity"
+    android:id="@+id/itemsConstraintLayout">
 
     <ImageView
         android:id="@+id/imageView"
@@ -37,7 +38,6 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:title="Items"
         app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
         app:titleTextColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"

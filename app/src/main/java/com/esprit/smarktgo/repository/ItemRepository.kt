@@ -7,7 +7,6 @@ import com.esprit.smarktgo.utils.RetrofitInstance
 
 class ItemRepository {
 
-
     val api = RetrofitInstance.getRetroInstance().create(ApiInterface::class.java)
 
     suspend fun getAllBySupermarketIdAndCategory(category: String, supermarketId: String): MutableList<Item>?

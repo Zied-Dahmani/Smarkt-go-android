@@ -5,6 +5,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.esprit.smarktgo.R
+import com.esprit.smarktgo.model.Item
+import com.esprit.smarktgo.model.Order
 
 class OrderDialog(val mActivity: ItemsActivity) {
 
@@ -12,12 +14,13 @@ class OrderDialog(val mActivity: ItemsActivity) {
     lateinit var priceTV : TextView
     lateinit var quantityTV : TextView
     lateinit var addToCartButton : Button
-    var price : Double = 0.0
     var counterPrice : Double = 0.0
     var quantity = 1
+    lateinit var item: Item
 
     lateinit var plusButton: CardView
     lateinit var minusButton: CardView
+
     fun show(){
         /**set View*/
         val infalter = mActivity.layoutInflater
@@ -25,7 +28,7 @@ class OrderDialog(val mActivity: ItemsActivity) {
         /**set Dialog*/
         val bulider = AlertDialog.Builder(mActivity)
         bulider.setView(dialogView)
-        bulider.setCancelable(false)
+        bulider.setCancelable(true)
         dialog = bulider.create()
         dialog.show()
 
@@ -35,7 +38,7 @@ class OrderDialog(val mActivity: ItemsActivity) {
         minusButton = dialog.findViewById(R.id.minusButton)
         addToCartButton = dialog.findViewById(R.id.addToCartButton)
 
-        priceTV.text = price.toString()
+        priceTV.text = item.price.toString()
         quantityTV.text = quantity.toString()
 
         plusButton.setOnClickListener {
@@ -44,31 +47,34 @@ class OrderDialog(val mActivity: ItemsActivity) {
         minusButton.setOnClickListener {
             minus()
         }
+        addToCartButton.setOnClickListener {
+            this.dismiss()
+            mActivity.addToCart(item,quantity)
+        }
 
     }
     fun dismiss(){
         dialog.dismiss()
     }
 
-    fun plus()
+    private fun plus()
     {
         quantity++
-        counterPrice = price* quantity
+        counterPrice = item.price* quantity
 
         priceTV.text = "%.1f".format(counterPrice)
         quantityTV.text = quantity.toString()
     }
 
-    fun minus()
+    private fun minus()
     {
         if(quantity>1)
         {
             quantity--
-            counterPrice = price* quantity
+            counterPrice = item.price* quantity
             priceTV.text = "%.1f".format(counterPrice)
             quantityTV.text = quantity.toString()
         }
     }
-
 
 }
