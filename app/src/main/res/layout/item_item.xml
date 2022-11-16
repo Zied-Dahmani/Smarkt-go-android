@@ -53,6 +53,20 @@
         app:layout_constraintTop_toBottomOf="@id/itemName"/>
 
     <TextView
+        android:id="@+id/itemQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray"
+        android:text="test"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@id/imageCardView"
+        app:layout_constraintTop_toBottomOf="@id/itemPrice"
+        android:visibility="invisible"/>
+
+
+    <TextView
         android:id="@+id/itemDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

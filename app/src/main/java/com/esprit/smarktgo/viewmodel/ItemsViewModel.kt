@@ -54,10 +54,10 @@ class ItemsViewModel(itemsActivity: ItemsActivity): ViewModel()  {
 
 
             val orderRepository = OrderRepository()
-            var itemsList = ArrayList<Item>()
+            var items = ArrayList<Item>()
             item.quantity = quantity
-            itemsList.add(item)
-            val order = Order(userId,itemsList)
+            items.add(item)
+            val order = Order(userId,items)
 
             viewModelScope.launch {
                 val result = orderRepository.addToCart(order)

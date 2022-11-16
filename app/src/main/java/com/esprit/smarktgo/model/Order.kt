@@ -7,3 +7,4 @@ class Order (
     @SerializedName("userId") val userId: String,
     @SerializedName("items") val items: ArrayList<Item>,
 ): Serializable
+

@@ -42,7 +42,7 @@ class ItemsActivity : AppCompatActivity() {
     }
 
     private fun prepareRecyclerView() {
-        itemAdapter = ItemAdapter(this)
+        itemAdapter = ItemAdapter(this,null)
         binding.rvItems.apply {
             adapter = itemAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL ,false)

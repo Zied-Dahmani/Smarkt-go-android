@@ -54,7 +54,7 @@ class OtpViewModel( otpActivity: OtpActivity): ViewModel() {
     fun handleSignInResult() {
         try {
             val account = auth.currentUser
-            val user = User(account?.phoneNumber.toString(), "", 0F)
+            val user = User(account?.phoneNumber.toString(), "", 0.0)
 
             viewModelScope.launch {
                 val signInResult = userRepository.signIn(user)

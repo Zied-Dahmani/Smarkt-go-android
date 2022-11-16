@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId)
             {
                 R.id.home -> replaceFragment(HomeFragment())
+                R.id.cart -> replaceFragment(CartFragment())
                 R.id.favorites -> replaceFragment(favoritesFragment)
                 else -> true
             }
@@ -58,7 +59,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if(binding.bottomNav.selectedItemId == R.id.favorites)
-            //replaceFragment(FavoritesFragment())
             favoritesFragment.updateList()
     }
 }

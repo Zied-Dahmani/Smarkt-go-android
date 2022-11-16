@@ -52,7 +52,7 @@ class FavoritesViewModel(favoritesFragment: FavoritesFragment): ViewModel() {
             } else FirebaseAuth.getInstance().currentUser?.phoneNumber!!
 
             viewModelScope.launch {
-                val result = supermarketRepository.getFavorites(User(userId,"",0F))
+                val result = supermarketRepository.getFavorites(User(userId,"",0.0))
 
                 result.let {
                     supermarketsLiveData.value = result

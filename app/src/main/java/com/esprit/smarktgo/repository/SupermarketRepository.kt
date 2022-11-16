@@ -1,15 +1,13 @@
 package com.esprit.smarktgo.repository
 
-import android.content.ContentValues
-import android.util.Log
+
 import com.esprit.smarktgo.model.AddRemoveFavorite
 import com.esprit.smarktgo.model.IsFavoriteBody
 import com.esprit.smarktgo.model.Supermarket
 import com.esprit.smarktgo.model.User
 import com.esprit.smarktgo.utils.ApiInterface
 import com.esprit.smarktgo.utils.RetrofitInstance
-import retrofit2.Response
-import retrofit2.http.Body
+
 
 class SupermarketRepository {
 

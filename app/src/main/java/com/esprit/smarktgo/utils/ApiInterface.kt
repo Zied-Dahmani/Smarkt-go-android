@@ -1,7 +1,7 @@
 package com.esprit.smarktgo.utils
 
 import com.esprit.smarktgo.model.*
-import  retrofit2.Response
+import retrofit2.Response
 import retrofit2.http.*
 
 
@@ -12,6 +12,9 @@ interface ApiInterface {
 
     @POST("user/signIn")
     suspend fun signIn(@Body user: User):Response<User>
+
+    @POST("user/update")
+    suspend fun updateProfile(@Body user: User):Response<User>
 
     @POST("supermarket/")
     suspend fun getNearest(@Body coordinates:ArrayList<Int>):Response<MutableList<Supermarket>>
@@ -36,6 +39,15 @@ interface ApiInterface {
 
     @POST("order/add")
     suspend fun addToCart(@Body order: Order): Response<Order>
+
+    @POST("order/get")
+    suspend fun getOrder(@Body user: User): Response<Order>
+
+    @POST("order/removeItem")
+    suspend fun removeItem(@Body order: Order): Response<Order>
+
+    @POST("/order/delete")
+    suspend fun deleteOrder(@Body user: User): Response<Order>?
 }
 
 
