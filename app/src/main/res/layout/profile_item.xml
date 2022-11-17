@@ -15,8 +15,6 @@ android:layout_marginTop="25dp"
         android:layout_marginLeft="10dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/background_border"
-        android:backgroundTint="@color/green"
 
         >
 
@@ -24,15 +22,15 @@ android:layout_marginTop="25dp"
             android:id="@+id/profileIcon"
             android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
             android:src="@color/white"
 
             />
 
         <TextView
             android:id="@+id/profileItem"
-            android:layout_width="333dp"
+            android:layout_width="301dp"
             android:layout_height="match_parent"
+            android:drawableEnd="@drawable/ic_baseline_arrow"
             android:paddingTop="12dp"
             android:text="test"
             android:textAlignment="center"

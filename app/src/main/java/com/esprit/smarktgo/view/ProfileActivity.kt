@@ -47,24 +47,23 @@ class ProfileActivity : AppCompatActivity() {
             name?.text=nameV
 
         })
-
+/*
 if (profileViewModel.userId.contains("@"))
 {
     txtFullName.visibility= View.INVISIBLE
     save.visibility=View.INVISIBLE
 }
 else {
-
+*/
 
     save.setOnClickListener {
         val input = txtFullName!!.text.toString()
         if (validate()) {
             profileViewModel = ProfileViewModel(this, input)
             profileViewModel.updateProfile()
-            val intent = Intent(this, ProfileActivity::class.java)
-            startActivity(intent)
+            name?.text=input
         }
-    }
+   //}
 
 }
 
