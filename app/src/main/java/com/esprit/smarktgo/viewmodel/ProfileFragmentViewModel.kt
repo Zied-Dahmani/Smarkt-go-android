@@ -37,7 +37,6 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) :ViewModel() {
     }
 
     var userLiveData = MutableLiveData<User>()
-
     var userRepository: UserRepository
     val mActivity = ProfileFragment()
     lateinit var userId: String
@@ -47,6 +46,7 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) :ViewModel() {
         GoogleSignIn.getLastSignedInAccount(mFragment.requireContext()).let {
             userId = it?.email!!
             getUserInfo()
+
         }
 
 

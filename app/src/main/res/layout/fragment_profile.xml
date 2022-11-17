@@ -14,52 +14,39 @@
         android:layout_marginTop="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.764"
-        tools:listitem="@layout/profile_item" />
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="406dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/background"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.723"
+        tools:listitem="@layout/profile_item" />
 
     <ImageView
         android:id="@+id/userprofileImage"
-        android:layout_width="89dp"
-        android:layout_height="96dp"
-        android:layout_marginStart="132dp"
-        android:layout_marginTop="144dp"
-        android:layout_marginEnd="131dp"
+        android:layout_width="133dp"
+        android:layout_height="109dp"
+        android:layout_marginTop="24dp"
         android:src="@drawable/ic_baseline_person_24"
-        app:layout_constraintEnd_toEndOf="@+id/view3"
-        app:layout_constraintHorizontal_bias="0.484"
-        app:layout_constraintStart_toStartOf="@+id/view3"
-        app:layout_constraintTop_toTopOf="@+id/view3" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="284dp"
-        android:layout_height="35dp"
+        android:layout_width="318dp"
+        android:layout_height="41dp"
         android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/view3"
-        app:layout_constraintTop_toTopOf="@+id/view3">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userprofileImage">
 
         <TextView
             android:id="@+id/fullName"
-            android:layout_width="match_parent"
+            android:layout_width="604dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="TextView"
+            android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -69,19 +56,48 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/ic_baseline_edit_24" />
+
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/walletDisplay"
-        android:layout_width="133dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="36dp"
-        android:text="TextView"
-        android:textSize="20sp"
-        android:textStyle="bold"
+    <LinearLayout
+        android:layout_width="232dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <TextView
+            android:id="@+id/walletDisplay"
+            android:layout_width="421dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_baseline_add_24" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="391dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/profileRecycler"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.942"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
