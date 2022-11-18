@@ -22,6 +22,7 @@ class SupermarketActivity : AppCompatActivity() {
     var latitude: Double = 0.0
     var longitude: Double = 0.0
     lateinit var name: String
+    lateinit var supermarketId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,10 +30,10 @@ class SupermarketActivity : AppCompatActivity() {
         binding = ActivitySupermarketBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
         binding.toolbar.setNavigationOnClickListener { finish() }
 
         name = intent.getStringExtra("name").toString()
+        supermarketId = intent.getStringExtra("supermarketId").toString()
         latitude = intent.getDoubleExtra("latitude",0.0)
         longitude = intent.getDoubleExtra("longitude",0.0)
         val description= intent.getStringExtra("description")
@@ -44,10 +45,25 @@ class SupermarketActivity : AppCompatActivity() {
         binding.supermarketDescription.text=description
 
         prepareRecyclerView()
-        supermarketViewModel = SupermarketViewModel()
+        supermarketViewModel = SupermarketViewModel(this)
         supermarketViewModel.observeCategoriesLiveData().observe(this, Observer { list ->
             categoryAdapter.setList(list)
         })
+
+        supermarketViewModel.observeIsFavoriteLiveData().observe(this, Observer { isFavorite ->
+            if(isFavorite)
+                binding.favorite.setImageResource(R.drawable.ic_baseline_favorite_filled_24)
+            else
+                binding.favorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+
+        })
+
+        binding.favorite.setOnClickListener {
+            if(supermarketViewModel.isFavorite.value!!)
+            supermarketViewModel.removeFavorite()
+            else
+                supermarketViewModel.addFavorite()
+        }
 
         binding.marker2.setOnClickListener{
             launchGoogleMaps()
@@ -62,7 +78,15 @@ class SupermarketActivity : AppCompatActivity() {
         }
     }
 
-    fun launchGoogleMaps()
+    fun navigateToItemsActivity(category:String){
+        val intent = Intent(this, ItemsActivity::class.java).apply {
+            putExtra("category", category)
+            putExtra("supermarketId",supermarketId )
+        }
+        startActivity(intent)
+    }
+
+    private fun launchGoogleMaps()
     {
         val supermarketLatitude = latitude
         val supermarketLongitude = longitude
@@ -70,4 +94,6 @@ class SupermarketActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:<$supermarketLatitude>,<$supermarketLongitude>?q=<$supermarketLatitude>,<$supermarketLongitude>($labelLocation)"))
         startActivity(intent)
     }
+
+
 }

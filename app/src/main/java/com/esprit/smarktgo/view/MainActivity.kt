@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
+    val favoritesFragment = FavoritesFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,10 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId)
             {
                 R.id.home -> replaceFragment(HomeFragment())
-R.id.profile->replaceFragment(ProfileFragment())
+                R.id.profile->replaceFragment(ProfileFragment())
+                R.id.cart -> replaceFragment(CartFragment())
+                R.id.favorites -> replaceFragment(favoritesFragment)
+                else -> true
             }
             true
         }
@@ -51,5 +55,11 @@ R.id.profile->replaceFragment(ProfileFragment())
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameLayout,fragment)
         fragmentTransaction.commit()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(binding.bottomNav.selectedItemId == R.id.favorites)
+            favoritesFragment.updateList()
     }
 }

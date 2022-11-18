@@ -63,7 +63,7 @@ class SignInViewModel(signInActivity: SignInActivity): ViewModel() {
     fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)
-            val user = User(id = account.email.toString(), fullName = account.displayName.toString(), wallet = 0F)
+            val user = User(id = account.email.toString(), fullName = account.displayName.toString(), wallet = 0.0)
 
             viewModelScope.launch {
                 val signInResult = userRepository.signIn(user)

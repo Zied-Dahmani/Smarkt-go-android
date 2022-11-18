@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.model.Supermarket
+import com.esprit.smarktgo.view.FavoritesFragment
 import com.esprit.smarktgo.view.HomeFragment
 
-class SupermarketAdapter(private val mFragment: HomeFragment) : RecyclerView.Adapter<SupermarketViewHolder>() {
+class SupermarketAdapter(private val homeFragment: HomeFragment?, private val favoritesFragment: FavoritesFragment?) : RecyclerView.Adapter<SupermarketViewHolder>() {
 
     private var list = ArrayList<Supermarket>()
 
@@ -33,12 +34,15 @@ class SupermarketAdapter(private val mFragment: HomeFragment) : RecyclerView.Ada
         holder.nameTV.text = list[position].name
         holder.addressTV.text = list[position].address
         holder.itemView.setOnClickListener {
+            val id = list[position].id
             val image = list[position].image
             val name= list[position].name
             val description =list[position].description
             val address =list[position].address
             val location = list[position].location
-            mFragment.navigateToSupermarketActivity(name,description,address,image,location)
+            homeFragment?.let {
+                homeFragment.navigateToSupermarketActivity(id,name,description,address,image,location)
+            }?: favoritesFragment?.navigateToSupermarketActivity(id,name,description,address,image,location)
         }
     }
 

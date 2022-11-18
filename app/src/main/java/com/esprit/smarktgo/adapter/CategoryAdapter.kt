@@ -31,8 +31,8 @@ class CategoryAdapter(val mActivity: SupermarketActivity) : RecyclerView.Adapter
         Glide.with(holder.itemView).load("http://192.168.1.16:9090/img/" + list[position] +".jpeg").into(holder.imageV)
         holder.nameTV.text = list[position]
         holder.itemView.setOnClickListener {
-            //val category = list[position]
-            //mActivity.navigateToSupermarketActivity(name,description,address,image)
+            val category = list[position]
+            mActivity.navigateToItemsActivity(category)
         }
     }
 
