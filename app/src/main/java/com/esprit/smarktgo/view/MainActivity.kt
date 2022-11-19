@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.home -> replaceFragment(HomeFragment())
                 R.id.cart -> replaceFragment(CartFragment())
                 R.id.favorites -> replaceFragment(favoritesFragment)
+                R.id.profile -> replaceFragment(ProfileFragment())
                 else -> true
             }
             true

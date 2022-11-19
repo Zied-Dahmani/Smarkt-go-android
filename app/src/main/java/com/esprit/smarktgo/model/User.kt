@@ -8,3 +8,7 @@ data class User(
     @SerializedName ("fullName") val fullName:String,
     @SerializedName ("wallet") val wallet:Double,
     ): Serializable
+data class ProfileItem (
+    val item:String,
+    val image:Int
+)

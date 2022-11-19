@@ -1,6 +1,7 @@
 package com.esprit.smarktgo.utils
 
 import com.esprit.smarktgo.model.*
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -48,6 +49,17 @@ interface ApiInterface {
 
     @POST("/order/delete")
     suspend fun deleteOrder(@Body user: User): Response<Order>?
+
+
+    @POST("user/signIn")
+    fun getInfo(@Body user: User): Call<User>
+
+    @PUT("user/update")
+    suspend fun updateProfilee(@Body user: User): Response<User>?
+
+
+
+
 }
 
 
