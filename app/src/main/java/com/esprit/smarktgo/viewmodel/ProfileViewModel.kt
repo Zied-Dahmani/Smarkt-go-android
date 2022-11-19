@@ -28,8 +28,6 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) :ViewModel() {
     private val mFragment = profileFragment
 
     fun setList(profileList: MutableList<ProfileItem>) {
-
-        profileList.add(ProfileItem("Profile", R.drawable.ic_baseline_person_24))
         profileList.add(ProfileItem("Settings", R.drawable.ic_baseline_settings_24))
         profileList.add(ProfileItem("Log Out", R.drawable.ic_baseline_logout_24))
     }

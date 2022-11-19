@@ -118,7 +118,6 @@ class ProfileFragment : Fragment() {
         // }
 
         initRecyclerView()
-        spacing()
 
 
         profileAdapter.setOnItemClickListener(object : ProfileAdapter.onItemClickListener {
@@ -179,11 +178,6 @@ class ProfileFragment : Fragment() {
         alert.show()
     }
 
-    fun spacing() {
-        val itemDecoration: ItemDecoration =
-            DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-        myRecycler.addItemDecoration(itemDecoration)
-    }
 
     fun validate(): Boolean {
         fullNameLayout.error = null
