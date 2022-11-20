@@ -1,28 +1,20 @@
 package com.esprit.smarktgo.viewmodel
 
-import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.esprit.smarktgo.R
-import com.esprit.smarktgo.adapter.ProfileAdapter
 import com.esprit.smarktgo.model.ProfileItem
 import com.esprit.smarktgo.model.User
 import com.esprit.smarktgo.repository.UserRepository
-import com.esprit.smarktgo.utils.ApiInterface
-import com.esprit.smarktgo.utils.RetrofitInstance
 import com.esprit.smarktgo.view.ProfileFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.common.api.ApiException
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class ProfileFragmentViewModel(profileFragment: ProfileFragment) :ViewModel() {
+
+class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
 
 
     private val mFragment = profileFragment
@@ -49,7 +41,7 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) :ViewModel() {
     }
 
 
-    fun updateProfile(fullname:String) {
+    fun updateProfile(fullname: String) {
         //  if (userId.contains("@")) {
 
         val user = User(userId, fullname, wallet = 0.0)
@@ -66,7 +58,7 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) :ViewModel() {
         }
     }
 
-    fun getUserInfo(){
+    fun getUserInfo() {
         val user = User(userId, "", wallet = 0.0)
 
         viewModelScope.launch {
@@ -79,43 +71,11 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) :ViewModel() {
                     userLiveData.value = data
                 }
             }
-        }}
-
-
+        }
+    }
 
 
     fun observeUser(): LiveData<User> = userLiveData
 
-
-
-
-
-
-
-    fun getUserInfo2(): User {
-        val retroService = RetrofitInstance.getRetroInstance().create(ApiInterface::class.java)
-        val user = User(userId, "", wallet = 0.0)
-        var data = User("", "", 0.0)
-
-        retroService.getInfo(user)
-
-        val call = retroService.getInfo(user)
-        call.enqueue(object : Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-                if (response.isSuccessful) {
-                    data = response.body()!!
-                    data.let {
-                        userLiveData.value = data
-                    }
-                    Log.d("TF","$data")
-                }
-            }
-
-            override fun onFailure(call: Call<User>, t: Throwable) {
-            }
-        })
-
-        return data
-    }
 
 }

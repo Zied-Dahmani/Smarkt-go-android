@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.google.gms:google-services:4.3.10'
 
     def lifecycle_version = "2.6.0-alpha01"
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
@@ -67,6 +67,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
+
+    implementation 'com.mapbox.maps:android:10.9.1'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

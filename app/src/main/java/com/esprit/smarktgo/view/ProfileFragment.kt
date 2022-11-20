@@ -13,10 +13,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.bumptech.glide.Glide
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.adapter.ProfileAdapter
@@ -123,7 +121,7 @@ class ProfileFragment : Fragment() {
         profileAdapter.setOnItemClickListener(object : ProfileAdapter.onItemClickListener {
             override fun onItemClick(position: Int) {
                 when (position) {
-                    2 -> showAlert()
+                    1 -> showAlert()
                 }
             }
 
