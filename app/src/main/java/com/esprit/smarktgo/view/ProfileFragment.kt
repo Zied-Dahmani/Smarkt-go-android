@@ -88,7 +88,7 @@ class ProfileFragment : Fragment() {
         onEditName.setOnClickListener {
             dialogView = inflater.inflate(R.layout.name_dialog, container,false)
             txtFullName = dialogView.findViewById(R.id.txtFullName)
-            fullNameLayout = dialogView.findViewById(R.id.fnLayout)
+            fullNameLayout = dialogView.findViewById(R.id.nameContainer)
             editButton = dialogView.findViewById(R.id.editNameButton)
             val builder = AlertDialog.Builder(requireContext())
 

@@ -19,7 +19,7 @@ class SupermarketsViewModel:ViewModel(){
         getAll()
     }
 
-     fun getAll(){
+     private fun getAll(){
         try {
             val supermarketRepository = SupermarketRepository()
 
