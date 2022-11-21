@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
@@ -16,8 +17,12 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.annotation.annotations
+import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationClickListener
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
+import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.viewannotation.viewAnnotationOptions
 
 var mapView: MapView? = null
 
@@ -42,14 +47,19 @@ class SupermarketsActivity : AppCompatActivity() {
                                 val point = lista[i].location
                                 addAnnotationToMap(point.coordinates[0], point.coordinates[1])
                             }
-
                         })
-
+                    mapView!!.location.updateSettings {
+                        enabled = true
+                        pulsingEnabled = true
+                    }
                 }
+
             }
         )
 
     }
+
+
 
     private fun addAnnotationToMap(long: Double, lat: Double) {
         bitmapFromDrawableRes(this@SupermarketsActivity, R.drawable.red_marker)?.let{
@@ -60,6 +70,12 @@ class SupermarketsActivity : AppCompatActivity() {
                 .withIconImage(it)
 
             pointAnnotationManager?.create(pointAnnotationOptions)
+            pointAnnotationManager?.addClickListener(object : OnPointAnnotationClickListener {
+                override fun onAnnotationClick(annotation: PointAnnotation): Boolean {
+             //       Toast.makeText(this@SupermarketsActivity, "Marker clicked", Toast.LENGTH_SHORT).show()
+                    return true
+                }
+            })
         }
     }
 
