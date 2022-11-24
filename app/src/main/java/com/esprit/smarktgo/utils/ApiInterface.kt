@@ -58,6 +58,11 @@ interface ApiInterface {
     suspend fun updateProfilee(@Body user: User): Response<User>?
 
 
+    @GET("ticket/")
+    suspend fun getAllTickets():Response<MutableList<Ticket>>
+
+    @POST("ticket/update")
+    suspend fun updateTicket(@Body updateTicket: UpdateTicket):Response<Ticket>
 
 
 }

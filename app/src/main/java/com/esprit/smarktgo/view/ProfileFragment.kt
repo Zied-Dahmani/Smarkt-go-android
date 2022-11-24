@@ -22,6 +22,7 @@ import com.esprit.smarktgo.model.ProfileItem
 import com.esprit.smarktgo.viewmodel.ProfileFragmentViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -39,6 +40,8 @@ class ProfileFragment : Fragment() {
     lateinit var myRecycler: RecyclerView
     private lateinit var profileAdapter: ProfileAdapter
     private lateinit var editButton: Button
+    private lateinit var walletDialog: WalletDialog
+    lateinit var view2 : View
 
     lateinit var dialogView: View
     lateinit var id:String
@@ -52,6 +55,8 @@ class ProfileFragment : Fragment() {
 
 
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        view2 = view
+
         myRecycler = view.findViewById(R.id.profileRecycler)
         fullnameDisplay = view.findViewById(R.id.fullName)
         walletDisplay = view.findViewById(R.id.walletDisplay)
@@ -66,13 +71,16 @@ class ProfileFragment : Fragment() {
             .circleCrop()
             .into(image)
         id=profileViewModel.userId
-        Log.d("aaa","$id")
+
+
 
         profileViewModel.observeUser().observe(requireActivity(), Observer {
             val u = profileViewModel.userLiveData.value
             val wallet = "%.1f".format(u?.wallet) + " TND"
             fullnameDisplay.text = u?.fullName
             walletDisplay.text = wallet
+            walletDialog = WalletDialog(this,id, u?.wallet!!)
+
         })
         val onEditName = view.findViewById<ImageView>(R.id.editname)
 
@@ -121,13 +129,12 @@ class ProfileFragment : Fragment() {
         profileAdapter.setOnItemClickListener(object : ProfileAdapter.onItemClickListener {
             override fun onItemClick(position: Int) {
                 when (position) {
-                    1 -> showAlert()
+                    0 -> walletDialog.show()
+                    2 -> showAlert()
                 }
             }
 
         })
-
-
 
         return view
     }
@@ -187,5 +194,10 @@ class ProfileFragment : Fragment() {
 
     }
 
-
+    fun walletUpdated(wallet:Double)
+    {
+        walletDisplay.text = "%.1f".format(wallet) + " TND"
+        Snackbar.make(view2,"Wallet Updated!", Snackbar.LENGTH_LONG).show()
+        walletDialog = WalletDialog(this,id, wallet!!)
+    }
 }
