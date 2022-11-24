@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.model.Item
-import com.esprit.smarktgo.model.Order
 
 class OrderDialog(val mActivity: ItemsActivity) {
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.esprit.smarktgo.model.GetOrder
 import com.esprit.smarktgo.model.Order
 import com.esprit.smarktgo.model.User
 import com.esprit.smarktgo.repository.OrderRepository
@@ -21,10 +22,10 @@ class CartViewModel(cartFragment: CartFragment): ViewModel() {
 
     private val mFragment = cartFragment
     lateinit var userId: String
-    private var orderLiveData = MutableLiveData<Order>()
+    private var orderLiveData = MutableLiveData<GetOrder>()
     private val orderRepository = OrderRepository()
     private var wallet = 0.0
-    val userRepository = UserRepository()
+    private val userRepository = UserRepository()
     lateinit var user : User
 
 
@@ -55,7 +56,7 @@ class CartViewModel(cartFragment: CartFragment): ViewModel() {
         }
     }
 
-    fun observeOrderLiveData() : LiveData<Order> = orderLiveData
+    fun observeOrderLiveData() : LiveData<GetOrder> = orderLiveData
 
     fun getTotal() : Double
     {
@@ -83,7 +84,7 @@ class CartViewModel(cartFragment: CartFragment): ViewModel() {
     private fun deleteOrder()
     {
         viewModelScope.launch {
-            val result = orderRepository.deleteOrder(User(orderLiveData.value!!.userId,"",0.0))
+            val result = orderRepository.deleteOrder(User(userId,"",0.0))
             result.let {
                 mFragment.showOrderInfo(false)
                 mFragment.showImage()
