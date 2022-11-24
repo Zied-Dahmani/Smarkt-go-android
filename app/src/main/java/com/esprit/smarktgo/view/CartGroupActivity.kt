@@ -50,9 +50,4 @@ class CartGroupActivity : AppCompatActivity() {
     {
         cartGroupViewModel.addUser(userId)
     }
-
-
-
-
-    
 }
