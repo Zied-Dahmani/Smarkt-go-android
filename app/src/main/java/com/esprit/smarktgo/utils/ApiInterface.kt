@@ -42,10 +42,10 @@ interface ApiInterface {
     suspend fun addToCart(@Body order: Order): Response<Order>
 
     @POST("order/get")
-    suspend fun getOrder(@Body user: User): Response<Order>
+    suspend fun getOrder(@Body user: User): Response<GetOrder>
 
     @POST("order/removeItem")
-    suspend fun removeItem(@Body order: Order): Response<Order>
+    suspend fun removeItem(@Body getOrder: GetOrder): Response<GetOrder>
 
     @POST("/order/delete")
     suspend fun deleteOrder(@Body user: User): Response<Order>?
@@ -64,6 +64,11 @@ interface ApiInterface {
     @POST("ticket/update")
     suspend fun updateTicket(@Body updateTicket: UpdateTicket):Response<Ticket>
 
+    @POST("user/get")
+    suspend fun getUsers(@Body order:GetOrder):Response<MutableList<User>>
+
+    @POST("order/addUser")
+    suspend fun addUser(@Body order:AddUser):Response<AddUser>
 
 }
 

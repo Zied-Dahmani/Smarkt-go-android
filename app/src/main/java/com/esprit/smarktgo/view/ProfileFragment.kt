@@ -74,6 +74,7 @@ class ProfileFragment : Fragment() {
 
 
 
+
         profileViewModel.observeUser().observe(requireActivity(), Observer {
             val u = profileViewModel.userLiveData.value
             val wallet = "%.1f".format(u?.wallet) + " TND"
@@ -130,6 +131,10 @@ class ProfileFragment : Fragment() {
             override fun onItemClick(position: Int) {
                 when (position) {
                     0 -> walletDialog.show()
+                    1 -> {
+                        val intent = Intent(requireContext(), CartGroupActivity::class.java)
+                        startActivity(intent)
+                    }
                     2 -> showAlert()
                 }
             }
@@ -138,7 +143,6 @@ class ProfileFragment : Fragment() {
 
         return view
     }
-
 
 
     private fun initRecyclerView() {

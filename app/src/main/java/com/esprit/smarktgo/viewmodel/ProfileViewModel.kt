@@ -21,6 +21,7 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
 
     fun setList(profileList: MutableList<ProfileItem>) {
         profileList.add(ProfileItem("Wallet", R.drawable.ic_baseline_wallet_24))
+        profileList.add(ProfileItem("Cart Group", R.drawable.ic_baseline_shopping_cart_24))
         profileList.add(ProfileItem("Settings", R.drawable.ic_baseline_settings_24))
         profileList.add(ProfileItem("Log Out", R.drawable.ic_baseline_logout_24))
     }

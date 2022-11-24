@@ -2,13 +2,8 @@ package com.esprit.smarktgo.view
 
 import android.app.AlertDialog
 import android.widget.Button
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import com.esprit.smarktgo.R
-import com.esprit.smarktgo.model.Item
-import com.esprit.smarktgo.model.Order
 import com.esprit.smarktgo.viewmodel.WalletViewModel
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 

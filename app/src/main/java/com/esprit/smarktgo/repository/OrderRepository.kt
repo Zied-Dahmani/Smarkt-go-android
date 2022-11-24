@@ -1,7 +1,7 @@
 package com.esprit.smarktgo.repository
 
-import android.content.ContentValues
-import android.util.Log
+import com.esprit.smarktgo.model.AddUser
+import com.esprit.smarktgo.model.GetOrder
 import com.esprit.smarktgo.model.Order
 import com.esprit.smarktgo.model.User
 import com.esprit.smarktgo.utils.ApiInterface
@@ -20,7 +20,7 @@ class OrderRepository {
         return request
     }
 
-    suspend fun get(userId: String): Order?
+    suspend fun get(userId: String): GetOrder?
     {
         val request =api.getOrder(User(userId,"",0.0))
 
@@ -28,7 +28,7 @@ class OrderRepository {
         return request.body()
     }
 
-    suspend fun removeItem(order: Order): Response<Order>?
+    suspend fun removeItem(order: GetOrder): Response<GetOrder>?
     {
         val request =api.removeItem(order)
 
@@ -44,4 +44,11 @@ class OrderRepository {
         return request
     }
 
+    suspend fun addUser(order: AddUser): Response<AddUser>?
+    {
+        val request =api.addUser(order)
+
+        if (request!!.code()!=200) return null
+        return request
+    }
 }
