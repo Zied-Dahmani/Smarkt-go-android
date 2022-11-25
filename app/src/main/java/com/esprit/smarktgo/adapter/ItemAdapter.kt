@@ -37,7 +37,7 @@ class ItemAdapter(val itemsActivity: ItemsActivity?, val cartFragment: CartFragm
 
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        Glide.with(holder.itemView).load("http://192.168.1.4:9090/img/" + list[position].image).into(holder.imageV)
+        Glide.with(holder.itemView).load("http://192.168.1.14:9090/img/" + list[position].image).into(holder.imageV)
         holder.nameTV.text = list[position].name
         holder.descriptionTV.text = list[position].description
         holder.priceTV.text = "${list[position].price} TND"

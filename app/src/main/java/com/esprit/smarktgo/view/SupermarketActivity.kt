@@ -39,7 +39,7 @@ class SupermarketActivity : AppCompatActivity() {
         val description= intent.getStringExtra("description")
         val address= intent.getStringExtra("address")
         val image= intent.getStringExtra("image")
-        Glide.with(applicationContext).load("http://192.168.1.4:9090/img/" + image).into(binding.supermarketImage)
+        Glide.with(applicationContext).load("http://192.168.1.14:9090/img/" + image).into(binding.supermarketImage)
         binding.supermarketName.text = name
         binding.supermarketAddress.text=address
         binding.supermarketDescription.text=description

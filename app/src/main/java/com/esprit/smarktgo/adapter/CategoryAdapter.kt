@@ -28,7 +28,7 @@ class CategoryAdapter(val mActivity: SupermarketActivity) : RecyclerView.Adapter
 
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        Glide.with(holder.itemView).load("http://192.168.1.4:9090/img/" + list[position] +".jpeg").into(holder.imageV)
+        Glide.with(holder.itemView).load("http://192.168.1.14:9090/img/" + list[position] +".jpeg").into(holder.imageV)
         holder.nameTV.text = list[position]
         holder.itemView.setOnClickListener {
             val category = list[position]

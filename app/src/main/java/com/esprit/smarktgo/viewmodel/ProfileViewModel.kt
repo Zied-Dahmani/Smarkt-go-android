@@ -1,5 +1,6 @@
 package com.esprit.smarktgo.viewmodel
 
+import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +12,7 @@ import com.esprit.smarktgo.model.User
 import com.esprit.smarktgo.repository.UserRepository
 import com.esprit.smarktgo.view.ProfileFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
 import kotlinx.coroutines.launch
 
 
@@ -44,7 +46,7 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
 
     fun updateProfile(fullname: String) {
         //  if (userId.contains("@")) {
-
+        try {
         val user = User(userId, fullname, wallet = 0.0)
 
         viewModelScope.launch {
@@ -57,10 +59,14 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
                 Log.d("TAG", "$updateResult")
             }
         }
+        } catch (e: ApiException) {
+            Log.w(ContentValues.TAG, e.statusCode.toString())
+        }
     }
 
     fun getUserInfo() {
         val user = User(userId, "", wallet = 0.0)
+        try {
 
         viewModelScope.launch {
             val data = userRepository.signIn(user)
@@ -73,6 +79,9 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
                 }
             }
         }
+    } catch (e: ApiException) {
+        Log.w(ContentValues.TAG, e.statusCode.toString())
+    }
     }
 
 
