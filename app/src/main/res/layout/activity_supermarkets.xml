@@ -7,13 +7,29 @@
     android:layout_height="match_parent"
     tools:context=".view.SupermarketsActivity">
 
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/mytoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="Supermarkets"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+        app:titleTextColor="@color/white"
+      />
+
+
+
     <com.mapbox.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
         mapbox:mapbox_cameraTargetLat="36.8891"
         mapbox:mapbox_cameraTargetLng="10.3223"
-        mapbox:mapbox_cameraZoom="9.0"
-        />
+        mapbox:mapbox_cameraZoom="9.0" />
+
 
 </android.widget.RelativeLayout>

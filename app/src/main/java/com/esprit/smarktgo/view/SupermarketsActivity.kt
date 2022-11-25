@@ -41,6 +41,7 @@ class SupermarketsActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_supermarkets)
+        setSupportActionBar(findViewById(R.id.mytoolbar))
 
         mapView = findViewById(R.id.mapView)
         mapView?.getMapboxMap()?.loadStyleUri(
