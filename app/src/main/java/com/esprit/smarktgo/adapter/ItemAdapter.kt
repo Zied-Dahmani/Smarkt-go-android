@@ -3,6 +3,7 @@ package com.esprit.smarktgo.adapter
 import android.annotation.SuppressLint
 import android.app.PendingIntent.getActivity
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +38,12 @@ class ItemAdapter(val itemsActivity: ItemsActivity?, val cartFragment: CartFragm
 
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        Glide.with(holder.itemView).load("http://192.168.1.14:9090/img/" + list[position].image).into(holder.imageV)
+     //   Glide.with(holder.itemView).load("http://192.168.1.14:9090/img/" + list[position].image).into(holder.imageV)
+     //   Glide.with(holder.itemView).load( list[position].image).into(holder.imageV)
+        Glide.with(holder.itemView)
+            .load(list[position].image)
+            .override(165,165)
+            .into(holder.imageV)
         holder.nameTV.text = list[position].name
         holder.descriptionTV.text = list[position].description
         holder.priceTV.text = "${list[position].price} TND"

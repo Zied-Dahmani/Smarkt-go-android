@@ -95,7 +95,6 @@ class SupermarketsActivity : AppCompatActivity() {
         }
         val seeMore = view.findViewById<TextView>(R.id.seeMore)
         seeMore.setOnClickListener {
-            Log.d("test","Clicked")
             navigateToSupermarketActivity(id,name,description,address,i,location)
         }
 
