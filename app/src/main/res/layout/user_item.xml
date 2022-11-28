@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/userImage"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@color/white"
         android:scaleType="fitXY"
         android:layout_marginStart="20dp"
@@ -26,7 +26,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toEndOf="@id/userImage"
         app:layout_constraintTop_toTopOf="@id/userImage"/>
 
@@ -35,7 +35,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:elevation="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="6dp"
         android:layout_marginEnd="20dp"
         app:cardBackgroundColor="@color/green"
         app:cardCornerRadius="8dp"

@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.adapter.CategoryAdapter
 import com.esprit.smarktgo.databinding.ActivitySupermarketBinding
+import com.esprit.smarktgo.utils.RetrofitInstance.BASE_URL
 import com.esprit.smarktgo.viewmodel.SupermarketViewModel
 
 
@@ -37,9 +38,9 @@ class SupermarketActivity : AppCompatActivity() {
         latitude = intent.getDoubleExtra("latitude",0.0)
         longitude = intent.getDoubleExtra("longitude",0.0)
         val description= intent.getStringExtra("description")
-        val address= intent.getStringExtra("address")
+        val address= intent.getStringExtra("address").toString()
         val image= intent.getStringExtra("image")
-        Glide.with(applicationContext).load("http://192.168.1.14:9090/img/" + image).into(binding.supermarketImage)
+        Glide.with(applicationContext).load(BASE_URL+"img/" + image).into(binding.supermarketImage)
         binding.supermarketName.text = name
         binding.supermarketAddress.text=address
         binding.supermarketDescription.text=description

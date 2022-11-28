@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.esprit.smarktgo.R
+import com.esprit.smarktgo.utils.RetrofitInstance.BASE_URL
 import com.esprit.smarktgo.view.SupermarketActivity
 
 class CategoryAdapter(val mActivity: SupermarketActivity) : RecyclerView.Adapter<CategoryViewHolder>() {
@@ -28,7 +29,7 @@ class CategoryAdapter(val mActivity: SupermarketActivity) : RecyclerView.Adapter
 
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        Glide.with(holder.itemView).load("http://192.168.1.14:9090/img/" + list[position] +".jpeg").into(holder.imageV)
+        Glide.with(holder.itemView).load(BASE_URL+"img/" + list[position] +".jpeg").into(holder.imageV)
         holder.nameTV.text = list[position]
         holder.itemView.setOnClickListener {
             val category = list[position]

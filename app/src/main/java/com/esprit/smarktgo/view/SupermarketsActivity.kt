@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.model.Location
+import com.esprit.smarktgo.utils.RetrofitInstance.BASE_URL
 import com.esprit.smarktgo.viewmodel.SupermarketsViewModel
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
@@ -58,20 +59,15 @@ class SupermarketsActivity : AppCompatActivity() {
                                 val point = lista[i].location
                                 prepareAnnotationMarker(point.coordinates[0], point.coordinates[1])
                                 pointAnnotationManager.apply {
-
                                     addClickListener(
                                         OnPointAnnotationClickListener {
                                             marketDetails(lista[i].id,lista[i].name,lista[i].description,lista[i].address,lista[i].image,lista[i].location)
-
                                             false
                                         }
                                     )
                                 }
-
-
                             }
                         })
-
                 }
 
             }
@@ -85,7 +81,7 @@ class SupermarketsActivity : AppCompatActivity() {
         val view = layoutInflater.inflate(R.layout.map_dialog, null)
         val image = view.findViewById<ImageView>(R.id.mapImage)
         val close = view.findViewById<ImageView>(R.id.close)
-        Glide.with(applicationContext).load("http://192.168.1.14:9090/img/" + i).into(image)
+        Glide.with(applicationContext).load(BASE_URL+"img/" + i).into(image)
 
         builder.setView(view)
         builder.show()
