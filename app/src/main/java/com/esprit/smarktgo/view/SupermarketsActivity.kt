@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toolbar
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,8 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.esprit.smarktgo.R
+import com.esprit.smarktgo.databinding.ActivityCartGroupBinding
+import com.esprit.smarktgo.databinding.ActivitySupermarketsBinding
 import com.esprit.smarktgo.model.Location
 import com.esprit.smarktgo.utils.RetrofitInstance.BASE_URL
 import com.esprit.smarktgo.viewmodel.SupermarketsViewModel
@@ -38,11 +41,19 @@ private lateinit var pointAnnotation: PointAnnotation
 lateinit var builder: AlertDialog
 lateinit var view:LayoutInflater
 class SupermarketsActivity : AppCompatActivity() {
+
+    private lateinit var binding : ActivitySupermarketsBinding
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_supermarkets)
-        setSupportActionBar(findViewById(R.id.mytoolbar))
+        binding = ActivitySupermarketsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        binding.toolbar.setNavigationOnClickListener { finish() }
 
         mapView = findViewById(R.id.mapView)
         mapView?.getMapboxMap()?.loadStyleUri(

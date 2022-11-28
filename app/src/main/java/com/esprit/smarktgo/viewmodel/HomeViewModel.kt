@@ -22,10 +22,12 @@ import kotlinx.coroutines.launch
 import android.content.Context
 import android.location.Location
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.auth.FirebaseAuth
 
 class HomeViewModel(homeFragment: HomeFragment): ViewModel() {
 
@@ -42,6 +44,11 @@ class HomeViewModel(homeFragment: HomeFragment): ViewModel() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(homeFragment.requireActivity())
         checkLocationPermission()
         getAll()
+        mFragment.welcomeTV.text = "welcome!"
+        val googleSignIn = GoogleSignIn.getLastSignedInAccount(mFragment.requireContext())
+        googleSignIn?.let{
+            mFragment.welcomeTV.text = "Welcome! ${googleSignIn.displayName}"
+        }
     }
 
     private fun getAll() {

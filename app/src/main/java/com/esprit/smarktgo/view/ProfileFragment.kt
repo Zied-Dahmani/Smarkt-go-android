@@ -135,7 +135,7 @@ class ProfileFragment : Fragment() {
                         val intent = Intent(requireContext(), CartGroupActivity::class.java)
                         startActivity(intent)
                     }
-                    2 -> showAlert()
+                    3 -> showAlert()
                 }
             }
 

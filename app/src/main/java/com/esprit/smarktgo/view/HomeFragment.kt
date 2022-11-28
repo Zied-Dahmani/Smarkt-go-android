@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.esprit.smarktgo.R
+import com.esprit.smarktgo.adapter.HomeCategoryAdapter
 import com.esprit.smarktgo.adapter.SupermarketAdapter
 import com.esprit.smarktgo.model.Location
 import com.esprit.smarktgo.viewmodel.HomeViewModel
@@ -21,13 +22,18 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     lateinit var rv: RecyclerView
+    lateinit var rv_categories: RecyclerView
+    lateinit var welcomeTV: TextView
     lateinit var gotoMap: TextView
     private lateinit var supermarketAdapter : SupermarketAdapter
+    private lateinit var homeCategoryAdapter: HomeCategoryAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_home,container,false)
         rv = view.findViewById(R.id.rv_supermarkets)
+        rv_categories = view.findViewById(R.id.rv_categories)
+        welcomeTV=view.findViewById<TextView>(R.id.welcomeTV)
         gotoMap=view.findViewById<TextView>(R.id.seeAllTV)
         prepareRecyclerView()
         homeViewModel = HomeViewModel(this)
@@ -43,9 +49,15 @@ class HomeFragment : Fragment() {
 
     private fun prepareRecyclerView() {
         supermarketAdapter = SupermarketAdapter(this,null)
+        homeCategoryAdapter = HomeCategoryAdapter(this)
+        homeCategoryAdapter.init()
         rv.apply {
             adapter = supermarketAdapter
             layoutManager = LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL ,false)
+        }
+        rv_categories.apply {
+            adapter = homeCategoryAdapter
+            layoutManager = LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL ,false)
         }
     }
 

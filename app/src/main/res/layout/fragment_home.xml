@@ -32,26 +32,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/welcomeTV" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/imageCardView"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        app:cardCornerRadius="8dp"
-        android:elevation="10dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/quoteTV"
+    <TextView
+        android:id="@+id/categoriesTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="sans-serif"
+        android:text="Categories"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/quoteTV"/>
 
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/home"
-            android:background="@color/white"
-            android:scaleType="centerCrop" />
-    </androidx.cardview.widget.CardView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_categories"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoriesTV"
+        tools:listitem="@layout/home_category_item">
+    </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
         android:id="@+id/nearestSupermarketsTV"
@@ -65,7 +70,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageCardView"/>
+        app:layout_constraintTop_toBottomOf="@id/rv_categories"/>
 
     <TextView
         android:id="@+id/seeAllTV"
