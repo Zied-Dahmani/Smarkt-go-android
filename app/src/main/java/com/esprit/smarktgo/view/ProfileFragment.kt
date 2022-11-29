@@ -40,11 +40,12 @@ class ProfileFragment : Fragment() {
     lateinit var myRecycler: RecyclerView
     private lateinit var profileAdapter: ProfileAdapter
     private lateinit var editButton: Button
-    private lateinit var walletDialog: WalletDialog
     lateinit var view2 : View
 
     lateinit var dialogView: View
     lateinit var id:String
+    var wallet:Double = 0.0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -77,10 +78,10 @@ class ProfileFragment : Fragment() {
 
         profileViewModel.observeUser().observe(requireActivity(), Observer {
             val u = profileViewModel.userLiveData.value
-            val wallet = "%.1f".format(u?.wallet) + " TND"
+            wallet = u?.wallet!!
+            val wd = "%.1f".format(u?.wallet) + " TND"
             fullnameDisplay.text = u?.fullName
-            walletDisplay.text = wallet
-            walletDialog = WalletDialog(this,id, u?.wallet!!)
+            walletDisplay.text = wd
 
         })
         val onEditName = view.findViewById<ImageView>(R.id.editname)
@@ -130,7 +131,13 @@ class ProfileFragment : Fragment() {
         profileAdapter.setOnItemClickListener(object : ProfileAdapter.onItemClickListener {
             override fun onItemClick(position: Int) {
                 when (position) {
-                    0 -> walletDialog.show()
+                    0 -> {
+                        val intent = Intent(requireContext(), WalletActivity::class.java).apply {
+                            putExtra("id",id)
+                            putExtra("wallet",wallet)
+                        }
+                        startActivity(intent)
+                    }
                     1 -> {
                         val intent = Intent(requireContext(), CartGroupActivity::class.java)
                         startActivity(intent)
@@ -195,13 +202,11 @@ class ProfileFragment : Fragment() {
             return false
         }
         return true
-
     }
 
-    fun walletUpdated(wallet:Double)
+    /*fun walletUpdated(walletParam:Double)
     {
         walletDisplay.text = "%.1f".format(wallet) + " TND"
         Snackbar.make(view2,"Wallet Updated!", Snackbar.LENGTH_LONG).show()
-        walletDialog = WalletDialog(this,id, wallet!!)
-    }
+    }*/
 }

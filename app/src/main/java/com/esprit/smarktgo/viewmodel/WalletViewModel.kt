@@ -4,24 +4,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.esprit.smarktgo.model.UpdateTicket
 import com.esprit.smarktgo.repository.TicketRepository
-import com.esprit.smarktgo.view.WalletDialog
+import com.esprit.smarktgo.view.WalletActivity
 import kotlinx.coroutines.launch
 
-class WalletViewModel(mDialog: WalletDialog): ViewModel() {
+class WalletViewModel(mActivity: WalletActivity): ViewModel() {
 
-    private val mDialog = mDialog
+    private val mActivity = mActivity
 
     private val ticketRepository: TicketRepository = TicketRepository()
 
     fun fill(code: String) : Boolean {
         if(code.isEmpty())
         {
-            mDialog.showError("Type the ticket's code!")
+            mActivity.showError("Type the ticket's code!")
             return false
         }
         else if(code.length!=6)
         {
-            mDialog.showError("Type a valid code!")
+            mActivity.showError("Type a valid code!")
             return false
         }
         else{
@@ -34,31 +34,31 @@ class WalletViewModel(mDialog: WalletDialog): ViewModel() {
                         if(code==ticket.code.toString()&&!ticket.used)
                         {
                             found = true
-                            update(code,ticket.value)
+                            update(code)
                             break
                         }
                         else if(code==ticket.code.toString())
                         {
-                            mDialog.showError("Invalid ticket!")
+                            mActivity.showError("Invalid ticket!")
                             found = true
                             break
                         }
                     }
                     if(!found)
-                        mDialog.showError("Ticket not found!")
+                        mActivity.showError("Ticket not found!")
                 }
             }
         }
         return true
     }
 
-    private fun update(code: String,ticketValue:Int)
+    private fun update(code: String)
     {
         viewModelScope.launch {
-            val updateTicket = UpdateTicket(code.toInt(),mDialog.userId,mDialog.wallet)
+            val updateTicket = UpdateTicket(code.toInt(),mActivity.id,mActivity.wallet)
             val result = ticketRepository.update(updateTicket)
             result?.let {
-                mDialog.dismiss(mDialog.wallet+ticketValue)
+                mActivity.finish()
             }
         }
     }

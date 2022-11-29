@@ -18,14 +18,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".view.CartGroupActivity"
+            android:name=".view.WalletActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.WalletDialog"
+            android:name=".view.CartGroupActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

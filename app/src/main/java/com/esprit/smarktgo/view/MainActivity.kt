@@ -21,17 +21,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-
-        binding.signOutButton.setOnClickListener {
-            val intent = Intent(this, SignInActivity::class.java)
-            startActivity(intent)
-
-            mGoogleSignInClient.signOut()
-            FirebaseAuth.getInstance().signOut()
-        }
-
         replaceFragment(HomeFragment())
 
         binding.bottomNav.setOnItemSelectedListener {
@@ -61,5 +50,9 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         if(binding.bottomNav.selectedItemId == R.id.favorites)
             favoritesFragment.updateList()
+        if(binding.bottomNav.selectedItemId == R.id.profile)
+        {
+            replaceFragment(ProfileFragment())
+        }
     }
 }
