@@ -9,6 +9,7 @@ import com.esprit.smarktgo.R
 import com.esprit.smarktgo.adapter.UserAdapter
 import com.esprit.smarktgo.databinding.ActivityCartGroupBinding
 import com.esprit.smarktgo.viewmodel.CartGroupViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class CartGroupActivity : AppCompatActivity() {
 
@@ -49,5 +50,10 @@ class CartGroupActivity : AppCompatActivity() {
     fun addUser(userId: String)
     {
         cartGroupViewModel.addUser(userId)
+    }
+
+    fun showSnackBar(text: String)
+    {
+        Snackbar.make(findViewById(R.id.cartGroupConstraintLayout),text, Snackbar.LENGTH_LONG).show()
     }
 }

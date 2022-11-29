@@ -76,6 +76,7 @@ class CartGroupViewModel(mActivity: CartGroupActivity): ViewModel() {
         viewModelScope.launch {
             val result = orderRepository.addUser(AddUser(userId,order.group))
             result?.let {
+                mActivity.showSnackBar("User added!")
             }
         }
     }

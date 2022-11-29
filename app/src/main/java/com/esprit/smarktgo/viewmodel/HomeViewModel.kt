@@ -44,7 +44,7 @@ class HomeViewModel(homeFragment: HomeFragment): ViewModel() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(homeFragment.requireActivity())
         checkLocationPermission()
         getAll()
-        mFragment.welcomeTV.text = "welcome!"
+        mFragment.welcomeTV.text = "Welcome!"
         val googleSignIn = GoogleSignIn.getLastSignedInAccount(mFragment.requireContext())
         googleSignIn?.let{
             mFragment.welcomeTV.text = "Welcome! ${googleSignIn.displayName}"

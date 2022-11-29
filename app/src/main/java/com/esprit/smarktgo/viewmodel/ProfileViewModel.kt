@@ -13,6 +13,7 @@ import com.esprit.smarktgo.repository.UserRepository
 import com.esprit.smarktgo.view.ProfileFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 
@@ -34,13 +35,11 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
 
     init {
         userRepository = UserRepository()
-        GoogleSignIn.getLastSignedInAccount(mFragment.requireContext()).let {
-            userId = it?.email!!
-            getUserInfo()
-
-        }
-
-
+        val googleSignIn = GoogleSignIn.getLastSignedInAccount(mFragment.requireContext())
+        userId = if(googleSignIn!=null) {
+            googleSignIn.email!!
+        } else FirebaseAuth.getInstance().currentUser?.phoneNumber.toString()
+        getUserInfo()
     }
 
 
