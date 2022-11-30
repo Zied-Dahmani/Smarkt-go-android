@@ -43,6 +43,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-base:18.1.0'
     implementation 'com.google.android.gms:play-services-auth:20.3.0'
     implementation 'com.google.gms:google-services:4.3.10'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.2'
 
     def lifecycle_version = "2.6.0-alpha01"
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
