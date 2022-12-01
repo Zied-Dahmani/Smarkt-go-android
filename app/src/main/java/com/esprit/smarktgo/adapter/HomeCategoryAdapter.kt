@@ -25,10 +25,10 @@ class HomeCategoryAdapter(val mFragment: HomeFragment) : RecyclerView.Adapter<Ho
 
     @SuppressLint("NotifyDataSetChanged")
     fun init() {
-        this.list.add(HomeCategory(name = "Fruits", image = R.drawable.fruits))
-        this.list.add(HomeCategory(name = "Vegetables", image = R.drawable.vegetables))
-        this.list.add(HomeCategory(name = "  Dairy\nproducts", image = R.drawable.dairy_products))
-        this.list.add(HomeCategory(name = " Baby\n Food", image = R.drawable.baby_food))
+        this.list.add(HomeCategory(name = mFragment.requireContext().getString(R.string.fruits), image = R.drawable.fruits))
+        this.list.add(HomeCategory(name = mFragment.requireContext().getString(R.string.vegetables), image = R.drawable.vegetables))
+        this.list.add(HomeCategory(name = mFragment.requireContext().getString(R.string.dairy_products), image = R.drawable.dairy_products))
+        this.list.add(HomeCategory(name = mFragment.requireContext().getString(R.string.baby_food), image = R.drawable.baby_food))
         notifyDataSetChanged()
     }
 

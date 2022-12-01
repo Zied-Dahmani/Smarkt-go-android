@@ -3,8 +3,8 @@ package com.esprit.smarktgo.view
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +22,6 @@ import com.esprit.smarktgo.model.ProfileItem
 import com.esprit.smarktgo.viewmodel.ProfileFragmentViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -41,6 +40,7 @@ class ProfileFragment : Fragment() {
     private lateinit var profileAdapter: ProfileAdapter
     private lateinit var editButton: Button
     lateinit var view2 : View
+    var profileList: MutableList<ProfileItem> = ArrayList()
 
     lateinit var dialogView: View
     lateinit var id:String
@@ -142,7 +142,10 @@ class ProfileFragment : Fragment() {
                         val intent = Intent(requireContext(), CartGroupActivity::class.java)
                         startActivity(intent)
                     }
-                    3 -> showAlert()
+                    2 -> {
+                        val intent = Intent(requireContext(), SettingsActivity::class.java)
+                        startActivity(intent)
+                    }
                 }
             }
 
@@ -153,47 +156,14 @@ class ProfileFragment : Fragment() {
 
 
     private fun initRecyclerView() {
-        var profileList: MutableList<ProfileItem> = ArrayList()
         profileViewModel.setList(profileList)
-        profileAdapter = ProfileAdapter(profileList)
+        profileAdapter = ProfileAdapter(profileList,null)
 
         myRecycler.apply {
             adapter = profileAdapter
             layoutManager = LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
         }
     }
-
-
-
-
-
-    private fun signOut() {
-        val gso =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-        val mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
-        val intent = Intent(requireContext(), SignInActivity::class.java)
-        startActivity(intent)
-        mGoogleSignInClient.signOut()
-        FirebaseAuth.getInstance().signOut()
-    }
-
-
-    private fun showAlert() {
-        val dialogBuilder = AlertDialog.Builder(requireContext())
-        dialogBuilder.setMessage("Do you want to leave us ?")
-            .setCancelable(false)
-            .setPositiveButton("Log Out", DialogInterface.OnClickListener { dialog, id ->
-                signOut()
-            })
-            .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
-                dialog.cancel()
-            })
-
-        val alert = dialogBuilder.create()
-        alert.setTitle("You are about to log out")
-        alert.show()
-    }
-
 
     fun validate(): Boolean {
         fullNameLayout.error = null

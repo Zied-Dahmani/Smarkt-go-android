@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.esprit.smarktgo.R
 import com.esprit.smarktgo.model.User
 import com.esprit.smarktgo.repository.UserRepository
 import com.esprit.smarktgo.view.OtpActivity
@@ -28,9 +29,9 @@ class OtpViewModel( otpActivity: OtpActivity): ViewModel() {
 
     fun verifyOTP(otp: String, storedVerificationId: String) {
         if (otp.isEmpty())
-            mActivity.showError("Type the OTP!")
+            mActivity.showError(mActivity.getString(R.string.type_the_otp))
         else if (otp.length != 6)
-            mActivity.showError("Tye a 6-digit code!")
+            mActivity.showError(mActivity.getString(R.string.type_a_digit_6_code))
         else {
             val credential: PhoneAuthCredential = PhoneAuthProvider.getCredential(storedVerificationId, otp)
             signInWithPhoneAuthCredential(credential)
@@ -45,7 +46,7 @@ class OtpViewModel( otpActivity: OtpActivity): ViewModel() {
                     handleSignInResult()
                 } else {
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                        mActivity.showError("Invalid OTP")
+                        mActivity.showError(mActivity.getString(R.string.invalid_otp))
                     }
                 }
             }

@@ -44,7 +44,7 @@
         app:counterEnabled="true"
         app:counterMaxLength="8"
         app:endIconMode="clear_text"
-        app:helperText="Required*"
+        app:helperText="@string/required"
         app:helperTextTextColor="#FF0000"
         app:hintTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +68,7 @@
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/button_style"
-        android:text="Sign In"
+        android:text="@string/sign_in"
         android:textAllCaps="false"
         android:textColor="#FFFF"
         app:backgroundTint="@color/green"
@@ -99,7 +99,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OR"
+            android:text="@string/or"
             android:layout_marginHorizontal="20dp"/>
 
         <View

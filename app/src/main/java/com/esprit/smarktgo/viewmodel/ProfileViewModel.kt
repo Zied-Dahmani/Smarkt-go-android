@@ -1,6 +1,8 @@
 package com.esprit.smarktgo.viewmodel
 
 import android.content.ContentValues
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,6 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 
 class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
@@ -23,10 +26,9 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
     private val mFragment = profileFragment
 
     fun setList(profileList: MutableList<ProfileItem>) {
-        profileList.add(ProfileItem("Wallet", R.drawable.ic_baseline_wallet_24))
-        profileList.add(ProfileItem("Cart Group", R.drawable.ic_baseline_shopping_cart_24))
-        profileList.add(ProfileItem("Settings", R.drawable.ic_baseline_settings_24))
-        profileList.add(ProfileItem("Log Out", R.drawable.ic_baseline_logout_24))
+        profileList.add(ProfileItem(mFragment.requireContext().getString(R.string.wallet), R.drawable.ic_baseline_wallet_24))
+        profileList.add(ProfileItem(mFragment.requireContext().getString(R.string.cart_group), R.drawable.ic_baseline_shopping_cart_24))
+        profileList.add(ProfileItem(mFragment.requireContext().getString(R.string.settings), R.drawable.ic_baseline_settings_24))
     }
 
     var userLiveData = MutableLiveData<User>()
@@ -40,8 +42,8 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
             googleSignIn.email!!
         } else FirebaseAuth.getInstance().currentUser?.phoneNumber.toString()
         getUserInfo()
-    }
 
+    }
 
     fun updateProfile(fullname: String) {
         //  if (userId.contains("@")) {

@@ -17,7 +17,13 @@
         android:theme="@style/Theme.SmarktGo"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".view.SettingsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <!--
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -34,9 +40,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-            -->
-
-
+        -->
         <activity
             android:name=".view.WalletActivity"
             android:exported="false">
@@ -107,8 +111,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
-
     </application>
 
 </manifest>

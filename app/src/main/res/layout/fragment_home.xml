@@ -17,7 +17,7 @@
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:text="Welcome! Zied DAHMANI" />
+        android:text="" />
 
     <TextView
         android:id="@+id/quoteTV"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="4dp"
-        android:text="Look no further! We got everything for you"
+        android:text="@string/quote"
         android:textColor="@color/gray"
         android:textSize="16sp"
         android:textStyle="normal"
@@ -39,7 +39,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
         android:fontFamily="sans-serif"
-        android:text="Categories"
+        android:text="@string/categories"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -65,7 +65,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
         android:fontFamily="sans-serif"
-        android:text="Nearest supermarkets"
+        android:text="@string/nearest_supermarkets"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -77,7 +77,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
-        android:text="See all"
+        android:text="@string/see_all"
         android:textColor="@color/green"
         android:textSize="14sp"
         android:textStyle="bold"

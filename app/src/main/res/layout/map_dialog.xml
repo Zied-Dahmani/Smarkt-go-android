@@ -25,7 +25,7 @@
         android:layout_width="252dp"
         android:layout_height="38dp"
         android:layout_marginTop="10dp"
-        android:text="See More"
+        android:text="@string/see_more"
         android:textAlignment="center"
         android:textColor="@color/green"
         android:textSize="15sp"

@@ -2,6 +2,7 @@ package com.esprit.smarktgo.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.esprit.smarktgo.R
 import com.esprit.smarktgo.model.UpdateTicket
 import com.esprit.smarktgo.repository.TicketRepository
 import com.esprit.smarktgo.view.WalletActivity
@@ -16,12 +17,12 @@ class WalletViewModel(mActivity: WalletActivity): ViewModel() {
     fun fill(code: String) : Boolean {
         if(code.isEmpty())
         {
-            mActivity.showError("Type the ticket's code!")
+            mActivity.showError(mActivity.getString(R.string.type_the_ticket_code))
             return false
         }
         else if(code.length!=6)
         {
-            mActivity.showError("Type a valid code!")
+            mActivity.showError(mActivity.getString(R.string.type_a_valid_code))
             return false
         }
         else{
@@ -39,13 +40,13 @@ class WalletViewModel(mActivity: WalletActivity): ViewModel() {
                         }
                         else if(code==ticket.code.toString())
                         {
-                            mActivity.showError("Invalid ticket!")
+                            mActivity.showError(mActivity.getString(R.string.invalid_ticket))
                             found = true
                             break
                         }
                     }
                     if(!found)
-                        mActivity.showError("Ticket not found!")
+                        mActivity.showError(mActivity.getString(R.string.ticket_not_found))
                 }
             }
         }

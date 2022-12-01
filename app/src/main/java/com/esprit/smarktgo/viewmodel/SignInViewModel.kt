@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.esprit.smarktgo.R
 import com.esprit.smarktgo.model.User
 import com.esprit.smarktgo.repository.UserRepository
 import com.esprit.smarktgo.view.SignInActivity
@@ -86,12 +87,12 @@ class SignInViewModel(signInActivity: SignInActivity): ViewModel() {
     fun signInWithPhoneNumber(number: String)  : Boolean {
         if(number.isEmpty())
         {
-            mActivity.showError("Type your phone number!")
+            mActivity.showError(mActivity.getString(R.string.type_your_phone_number))
             return false
         }
         else if(number.length!=8)
         {
-            mActivity.showError("Type a valid phone number!")
+            mActivity.showError(mActivity.getString(R.string.type_a_valid_phone_number))
             return false
         }
         else
