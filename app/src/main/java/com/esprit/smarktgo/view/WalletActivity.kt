@@ -1,10 +1,10 @@
 package com.esprit.smarktgo.view
 
 
-import android.Manifest
-import android.app.ProgressDialog
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.databinding.ActivityWalletBinding
@@ -32,21 +32,21 @@ class WalletActivity : AppCompatActivity() {
         id = intent.getStringExtra("id")!!
         wallet = intent.getDoubleExtra("wallet", 0.0)
 
-        binding.fillButton.setOnClickListener {
-            walletViewModel.fill(binding.code.text.toString())
-        }
 
-        binding.Pick.setOnClickListener {
+        binding.fillButton.setOnClickListener {
             walletViewModel.showInputImageDialog()
         }
 
-        binding.Scan.setOnClickListener {
-           if ( walletViewModel.imageUri == null) {
-               walletViewModel.showToast("PICK IMAGE FIRST")
-            } else {
-               walletViewModel.recognizeTextFromImage()
+        binding.code.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                walletViewModel.fill(binding.code.text.toString())
             }
-        }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            }
+        })
     }
 
 

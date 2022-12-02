@@ -102,27 +102,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/codeContainer"/>
 
-    <Button
-        android:id="@+id/Scan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Scan"
-        app:layout_constraintEnd_toEndOf="@+id/fillButton"
-        app:layout_constraintHorizontal_bias="0.168"
-        app:layout_constraintStart_toStartOf="@+id/fillButton"
-        app:layout_constraintTop_toBottomOf="@+id/fillButton" />
-
-    <Button
-        android:id="@+id/Pick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Pick"
-        app:layout_constraintEnd_toEndOf="@+id/fillButton"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toEndOf="@+id/Scan"
-        app:layout_constraintTop_toBottomOf="@+id/fillButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -47,8 +47,6 @@ class WalletViewModel(mActivity: WalletActivity): ViewModel() {
         cameraPermissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         storagePermissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         progressDialog = ProgressDialog(mActivity)
-        progressDialog.setTitle("Please wait")
-        progressDialog.setCanceledOnTouchOutside(false)
         textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
     }
@@ -135,10 +133,7 @@ class WalletViewModel(mActivity: WalletActivity): ViewModel() {
         val intent= Intent(Intent.ACTION_PICK)
         intent.type="image/*"
         galleryActivityResultLauncher.launch(intent)
-
-         //condition
-         //recognizeTextFromImage()
-    }
+     }
 
      fun pickImageCamera(){
         val values= ContentValues()
@@ -148,15 +143,13 @@ class WalletViewModel(mActivity: WalletActivity): ViewModel() {
         val intent= Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri)
         cameraActivityResultLauncher.launch(intent)
-    }
+
+     }
 
     private val cameraActivityResultLauncher =
         mActivity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-
-            }
-            else {
-
+                recognizeTextFromImage()
             }
         }
 
@@ -166,14 +159,13 @@ class WalletViewModel(mActivity: WalletActivity): ViewModel() {
             {
                 val data=result.data
                 imageUri=data!!.data
-            }
-
-            else {
-                showToast("Cancelled...")
+                recognizeTextFromImage()
             }
         }
 
     fun recognizeTextFromImage() {
+        progressDialog.setTitle("Please wait")
+        progressDialog.setCanceledOnTouchOutside(false)
         progressDialog.setMessage("Preparing Image...")
         progressDialog.show()
         try {
@@ -197,7 +189,7 @@ class WalletViewModel(mActivity: WalletActivity): ViewModel() {
     }
 
     fun showInputImageDialog() {
-        val popupMenu = PopupMenu(mActivity, mActivity.binding.Scan)
+        val popupMenu = PopupMenu(mActivity, mActivity.binding.fillButton)
         popupMenu.menu.add(Menu.NONE, 1, 1, "CAMERA")
         popupMenu.menu.add(Menu.NONE, 2, 2, "GALLERY")
         popupMenu.show()
@@ -219,6 +211,6 @@ class WalletViewModel(mActivity: WalletActivity): ViewModel() {
             return@setOnMenuItemClickListener true
         }
     }
-    
+
 
 }
