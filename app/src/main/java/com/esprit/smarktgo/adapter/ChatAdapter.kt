@@ -1,25 +1,14 @@
 package com.esprit.smarktgo.adapter
 
 import android.annotation.SuppressLint
-import android.app.PendingIntent.getActivity
-import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.model.Chat
-import com.esprit.smarktgo.model.Item
-import com.esprit.smarktgo.view.CartFragment
-import com.esprit.smarktgo.view.ItemsActivity
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

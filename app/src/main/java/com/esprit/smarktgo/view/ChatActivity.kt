@@ -2,20 +2,11 @@ package com.esprit.smarktgo.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.adapter.ChatAdapter
-import com.esprit.smarktgo.adapter.UserAdapter
-import com.esprit.smarktgo.databinding.ActivityCartGroupBinding
 import com.esprit.smarktgo.databinding.ActivityChatBinding
-import com.esprit.smarktgo.model.Chat
-import com.esprit.smarktgo.viewmodel.CartGroupViewModel
 import com.esprit.smarktgo.viewmodel.ChatViewModel
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.getField
-import com.google.firebase.ktx.Firebase
 
 class ChatActivity : AppCompatActivity() {
 
