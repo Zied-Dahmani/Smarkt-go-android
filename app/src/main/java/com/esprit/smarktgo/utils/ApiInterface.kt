@@ -17,6 +17,9 @@ interface ApiInterface {
     @POST("user/update")
     suspend fun updateProfile(@Body user: User):Response<User>
 
+    @POST("user/update")
+    suspend fun updateUsername(@Body user: updateUsername): Response<updateUsername>
+
     @POST("supermarket/")
     suspend fun getNearest(@Body coordinates:ArrayList<Int>):Response<MutableList<Supermarket>>
 
@@ -53,10 +56,6 @@ interface ApiInterface {
 
     @POST("user/signIn")
     fun getInfo(@Body user: User): Call<User>
-
-    @PUT("user/update")
-    suspend fun updateProfilee(@Body user: User): Response<User>?
-
 
     @GET("ticket/")
     suspend fun getAllTickets():Response<MutableList<Ticket>>

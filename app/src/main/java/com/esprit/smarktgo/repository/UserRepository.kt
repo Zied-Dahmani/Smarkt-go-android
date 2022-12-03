@@ -1,9 +1,6 @@
 package com.esprit.smarktgo.repository
 
-import com.esprit.smarktgo.model.GetOrder
-import com.esprit.smarktgo.model.Order
-import com.esprit.smarktgo.model.Supermarket
-import com.esprit.smarktgo.model.User
+import com.esprit.smarktgo.model.*
 import com.esprit.smarktgo.utils.ApiInterface
 import com.esprit.smarktgo.utils.RetrofitInstance
 import retrofit2.Response
@@ -37,9 +34,9 @@ class UserRepository {
       return request.body()
    }
 
-   suspend fun updateProfilee(@Body user: User):User?
+   suspend fun updateUsername(@Body user: updateUsername):updateUsername?
    {
-      val request =api.updateProfile(user)
+      val request =api.updateUsername(user)
 
       if (request.code()!=200) return null
       return request.body()

@@ -21,6 +21,7 @@ import com.esprit.smarktgo.R
 import com.esprit.smarktgo.model.UpdateTicket
 import com.esprit.smarktgo.repository.TicketRepository
 import com.esprit.smarktgo.view.WalletActivity
+import com.google.android.gms.common.api.ApiException
 import com.google.mlkit.vision.common.InputImage
 import kotlinx.coroutines.launch
 import com.google.mlkit.vision.text.TextRecognition
@@ -92,12 +93,16 @@ class WalletViewModel(mActivity: WalletActivity): ViewModel() {
 
     private fun update(code: String)
     {
+        try {
         viewModelScope.launch {
             val updateTicket = UpdateTicket(code.toInt(),mActivity.id,mActivity.wallet)
             val result = ticketRepository.update(updateTicket)
             result?.let {
                 mActivity.finish()
             }
+        }
+        } catch (e: ApiException) {
+            Log.w(ContentValues.TAG, e.statusCode.toString())
         }
     }
 

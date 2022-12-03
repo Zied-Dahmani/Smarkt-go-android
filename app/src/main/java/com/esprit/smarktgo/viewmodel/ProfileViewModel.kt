@@ -1,23 +1,24 @@
 package com.esprit.smarktgo.viewmodel
 
 import android.content.ContentValues
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.esprit.smarktgo.R
+import com.esprit.smarktgo.adapter.ProfileAdapter
 import com.esprit.smarktgo.model.ProfileItem
 import com.esprit.smarktgo.model.User
+import com.esprit.smarktgo.model.updateUsername
 import com.esprit.smarktgo.repository.UserRepository
 import com.esprit.smarktgo.view.ProfileFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
-import java.util.Locale
+
 
 
 class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
@@ -31,32 +32,38 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
         profileList.add(ProfileItem(mFragment.requireContext().getString(R.string.settings), R.drawable.ic_baseline_settings_24))
     }
 
+    var profileList: MutableList<ProfileItem> = ArrayList()
     var userLiveData = MutableLiveData<User>()
-    var userRepository: UserRepository
+    private val userRepository: UserRepository = UserRepository()
     var userId: String
-
     init {
-        userRepository = UserRepository()
         val googleSignIn = GoogleSignIn.getLastSignedInAccount(mFragment.requireContext())
         userId = if(googleSignIn!=null) {
             googleSignIn.email!!
         } else FirebaseAuth.getInstance().currentUser?.phoneNumber.toString()
         getUserInfo()
-
     }
-
-    fun updateProfile(fullname: String) {
-        //  if (userId.contains("@")) {
+    fun validateData(fullname: String):Boolean
+    {
+        if (fullname.isEmpty())
+        {
+            mFragment.validateFullname(mFragment.getString(R.string.mustNotBeEmpty))
+            return false
+        }
+        else {
+         updateProfile(fullname)
+        }
+        return true
+    }
+    private fun updateProfile(fullname: String) {
         try {
-        val user = User(userId, fullname, wallet = 0.0)
-
+        val user= updateUsername(userId,fullname)
         viewModelScope.launch {
 
-            val updateResult = userRepository.updateProfilee(user)
+            val updateResult = userRepository.updateUsername(user)
             if (updateResult == null) {
                 Log.d("TAG", "NO RESULT")
             } else {
-
                 Log.d("TAG", "$updateResult")
             }
         }
@@ -65,19 +72,13 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
         }
     }
 
-    fun getUserInfo() {
+   private fun getUserInfo() {
         val user = User(userId, "", wallet = 0.0)
         try {
-
         viewModelScope.launch {
             val data = userRepository.signIn(user)
-            if (data == null) {
-
-                Log.d("TAG", "Tneket")
-            } else {
-                data.let {
-                    userLiveData.value = data
-                }
+            data?.let {
+                userLiveData.value = data
             }
         }
     } catch (e: ApiException) {
@@ -85,8 +86,16 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
     }
     }
 
+     fun initRecyclerView() {
+        setList(profileList)
+        mFragment.profileAdapter = ProfileAdapter(profileList,null)
+        mFragment.myRecycler.apply {
+            adapter = mFragment.profileAdapter
+           layoutManager = LinearLayoutManager(mFragment.view?.context, LinearLayoutManager.VERTICAL, false)
+        }
+    }
+
 
     fun observeUser(): LiveData<User> = userLiveData
-
 
 }
