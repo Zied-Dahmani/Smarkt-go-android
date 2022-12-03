@@ -9,6 +9,7 @@ data class Order (
 ): Serializable
 
 data class GetOrder (
+    @SerializedName("_id") val id: String,
     @SerializedName("group") val group: ArrayList<String>,
     @SerializedName("items") val items: ArrayList<Item>
 ): Serializable

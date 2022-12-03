@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.esprit.smarktgo"
-        minSdk 24
+        minSdk 26
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -45,6 +45,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:20.3.0'
     implementation 'com.google.gms:google-services:4.3.10'
     implementation 'com.google.firebase:firebase-messaging-ktx:23.0.2'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.4.1'
 
     def lifecycle_version = "2.6.0-alpha01"
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'

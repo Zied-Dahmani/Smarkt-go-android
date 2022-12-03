@@ -1,5 +1,6 @@
 package com.esprit.smarktgo.repository
 
+import android.util.Log
 import com.esprit.smarktgo.model.AddUser
 import com.esprit.smarktgo.model.GetOrder
 import com.esprit.smarktgo.model.Order
@@ -12,7 +13,7 @@ class OrderRepository {
 
     val api = RetrofitInstance.getRetroInstance().create(ApiInterface::class.java)
 
-    suspend fun addToCart(order: Order): Response<Order>?
+    suspend fun addToCart(order: Order): Response<GetOrder>?
     {
         val request =api.addToCart(order)
 
@@ -36,7 +37,7 @@ class OrderRepository {
         return request
     }
 
-    suspend fun deleteOrder(user: User): Response<Order>?
+    suspend fun deleteOrder(user: User): Response<GetOrder>?
     {
         val request =api.deleteOrder(user)
 

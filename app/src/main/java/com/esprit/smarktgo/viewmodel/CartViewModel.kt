@@ -1,6 +1,7 @@
 package com.esprit.smarktgo.viewmodel
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.util.Log
 import android.widget.TextView
 import androidx.lifecycle.LiveData
@@ -16,6 +17,8 @@ import com.esprit.smarktgo.view.CartFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
 class CartViewModel(cartFragment: CartFragment): ViewModel() {
@@ -88,6 +91,7 @@ class CartViewModel(cartFragment: CartFragment): ViewModel() {
             result.let {
                 mFragment.showOrderInfo(false)
                 mFragment.showImage()
+                deleteChat(result?.body()!!.id)
             }
         }
     }
@@ -122,6 +126,27 @@ class CartViewModel(cartFragment: CartFragment): ViewModel() {
         viewModelScope.launch {
           userRepository.updateProfile(User(user.id,user.fullName,walletParam))
         }
+    }
+
+    private fun deleteChat(orderId: String)
+    {
+        val db = Firebase.firestore
+
+        db.collection("chats")
+            .whereEqualTo("orderId", orderId)
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    db.collection("chats")
+                        .document(document.id)
+                        .delete()
+                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
+                        .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents.", exception)
+            }
     }
 
 

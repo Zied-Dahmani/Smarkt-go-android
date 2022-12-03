@@ -189,7 +189,7 @@ class WalletViewModel(mActivity: WalletActivity): ViewModel() {
     }
 
     fun showInputImageDialog() {
-        val popupMenu = PopupMenu(mActivity, mActivity.binding.fillButton)
+        val popupMenu = PopupMenu(mActivity, mActivity.binding.scanButton)
         popupMenu.menu.add(Menu.NONE, 1, 1, "CAMERA")
         popupMenu.menu.add(Menu.NONE, 2, 2, "GALLERY")
         popupMenu.show()

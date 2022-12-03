@@ -139,7 +139,9 @@ class ProfileFragment : Fragment() {
                         startActivity(intent)
                     }
                     1 -> {
-                        val intent = Intent(requireContext(), CartGroupActivity::class.java)
+                        val intent = Intent(requireContext(), ChatActivity::class.java).apply {
+                            putExtra("userName",fullnameDisplay.text)
+                        }
                         startActivity(intent)
                     }
                     2 -> {

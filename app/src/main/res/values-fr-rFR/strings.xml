@@ -27,7 +27,7 @@
     <string name="categories">Catégories</string>
     <string name="ticket">Ticket</string>
     <string name="a_6_digit_code">un code à 6 chiffres</string>
-    <string name="fill">Confirmer</string>
+    <string name="scan">Scanner</string>
     <string name="your_wallet">Votre porte monnaie:</string>
     <string name="total">Total</string>
     <string name="pay">Payer</string>
@@ -36,7 +36,9 @@
     <string name="see_all">Voir tout</string>
     <string name="see_more">Voir plus</string>
     <string name="edit">Éditer</string>
-    <string name="add_to_cart">Ajouter au panier</string>
+    <string name="add_to_cart">Ajouter</string>
+    <string name="added_to_cart">Ajouté au panier</string>
+    <string name="already_have_orders">Vous avez déjà des commandes d un autre supermarché!</string>
     <string name="wallet">Porte monnaie</string>
     <string name="log_out">Se déconnecter</string>
     <string name="fruits">Fruits</string>
@@ -64,6 +66,7 @@
     <string name="yes">Oui</string>
     <string name="no">Non</string>
 
+    <string name="chat">Chat</string>
 
     <string name="mapbox_access_token">pk.eyJ1IjoibWlzbGVtIiwiYSI6ImNsYWxvc3p4NTA3ZW4zcXQ3djAyN2ppcGMifQ.JCoW7G8Ona4ivtAJVeJjmQ</string>
 </resources>

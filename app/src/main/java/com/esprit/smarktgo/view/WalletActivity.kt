@@ -33,7 +33,7 @@ class WalletActivity : AppCompatActivity() {
         wallet = intent.getDoubleExtra("wallet", 0.0)
 
 
-        binding.fillButton.setOnClickListener {
+        binding.scanButton.setOnClickListener {
             walletViewModel.showInputImageDialog()
         }
 

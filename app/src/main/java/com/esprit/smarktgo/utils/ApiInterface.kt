@@ -39,7 +39,7 @@ interface ApiInterface {
     suspend fun getAllBySupermarketIdAndCategory(@Body itemInfo: ItemInfo):Response<MutableList<Item>>
 
     @POST("order/add")
-    suspend fun addToCart(@Body order: Order): Response<Order>
+    suspend fun addToCart(@Body order: Order): Response<GetOrder>
 
     @POST("order/get")
     suspend fun getOrder(@Body user: User): Response<GetOrder>
@@ -48,7 +48,7 @@ interface ApiInterface {
     suspend fun removeItem(@Body getOrder: GetOrder): Response<GetOrder>
 
     @POST("/order/delete")
-    suspend fun deleteOrder(@Body user: User): Response<Order>?
+    suspend fun deleteOrder(@Body user: User): Response<GetOrder>?
 
 
     @POST("user/signIn")
