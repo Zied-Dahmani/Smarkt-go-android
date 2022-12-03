@@ -42,9 +42,17 @@ class UserRepository {
       return request.body()
    }
 
-   suspend fun getUsers(order: GetOrder): MutableList<User>?
+   suspend fun getGroupMembers(order: GetOrder): MutableList<User>?
    {
-      val request =api.getUsers(order)
+      val request =api.getGroupMembers(order)
+
+      if (request.code()!=200) return null
+      return request.body()
+   }
+
+   suspend fun getAllUsers(): MutableList<User>?
+   {
+      val request =api.getAllUsers()
 
       if (request.code()!=200) return null
       return request.body()

@@ -65,16 +65,18 @@
 
         <string name="yes">Yes</string>
         <string name="no">No</string>
-    <string name="please_wait">Please wait!</string>
-    <string name="preparing_image">Preparing image </string>
-    <string name="recognizing_text">Recognizing text</string>
-    <string name="recognizing_failed"> Failed to recognize text due to</string>
-    <string name="preparing_failed">Failed to prepare image due to</string>
-    <string name="selection_failed">Please choose an image!</string>
-    <string name="camera_required">Camera permission required!</string>
-    <string name="storage_required">Storage permission required!</string>
+
+        <string name="please_wait">Please wait!</string>
+        <string name="preparing_image">Preparing image </string>
+        <string name="recognizing_text">Recognizing text</string>
+        <string name="recognizing_failed"> Failed to recognize text due to</string>
+        <string name="preparing_failed">Failed to prepare image due to</string>
+        <string name="selection_failed">Please choose an image!</string>
+        <string name="camera_required">Camera permission required!</string>
+        <string name="storage_required">Storage permission required!</string>
 
         <string name="chat">Chat</string>
+    <string name="member_added">Member added</string>
 
 
     <string name="mapbox_access_token">pk.eyJ1IjoibWlzbGVtIiwiYSI6ImNsYWxvc3p4NTA3ZW4zcXQ3djAyN2ppcGMifQ.JCoW7G8Ona4ivtAJVeJjmQ</string>

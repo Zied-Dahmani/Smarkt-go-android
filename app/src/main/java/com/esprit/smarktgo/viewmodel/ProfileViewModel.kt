@@ -12,6 +12,7 @@ import com.esprit.smarktgo.adapter.ProfileAdapter
 import com.esprit.smarktgo.model.ProfileItem
 import com.esprit.smarktgo.model.User
 import com.esprit.smarktgo.model.updateUsername
+import com.esprit.smarktgo.repository.OrderRepository
 import com.esprit.smarktgo.repository.UserRepository
 import com.esprit.smarktgo.view.ProfileFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -35,13 +36,18 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
     var profileList: MutableList<ProfileItem> = ArrayList()
     var userLiveData = MutableLiveData<User>()
     private val userRepository: UserRepository = UserRepository()
+    private val orderRepository: OrderRepository = OrderRepository()
     var userId: String
+
+    var orderId = ""
+
     init {
         val googleSignIn = GoogleSignIn.getLastSignedInAccount(mFragment.requireContext())
         userId = if(googleSignIn!=null) {
             googleSignIn.email!!
         } else FirebaseAuth.getInstance().currentUser?.phoneNumber.toString()
         getUserInfo()
+        getOrder()
     }
     fun validateData(fullname: String):Boolean
     {
@@ -97,5 +103,19 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
 
 
     fun observeUser(): LiveData<User> = userLiveData
+
+    private fun getOrder() {
+        try {
+            viewModelScope.launch {
+                val result = orderRepository.get(userId)
+
+                result?.let {
+                    orderId =  result.id
+                }
+            }
+        } catch (e: ApiException) {
+            Log.w(ContentValues.TAG, e.statusCode.toString())
+        }
+    }
 
 }

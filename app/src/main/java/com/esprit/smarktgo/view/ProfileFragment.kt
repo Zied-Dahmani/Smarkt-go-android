@@ -16,6 +16,7 @@ import com.esprit.smarktgo.databinding.FragmentProfileBinding
 import com.esprit.smarktgo.databinding.NameDialogBinding
 import com.esprit.smarktgo.viewmodel.ProfileFragmentViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
 
@@ -87,10 +88,18 @@ class ProfileFragment : Fragment() {
                         startActivity(intent)
                     }
                     1 -> {
-                        val intent = Intent(requireContext(), ChatActivity::class.java).apply {
-                            putExtra("userName",binding.fullName.text)
+                        if (profileViewModel.orderId.isNotEmpty())
+                        {
+                            val intent = Intent(requireContext(), ChatActivity::class.java).apply {
+                                putExtra("userName",binding.fullName.text)
+                                putExtra("orderId",profileViewModel.orderId)
+                                putExtra("userId",profileViewModel.userId)
+                            }
+                            startActivity(intent)
                         }
-                        startActivity(intent)
+                        else
+                            Snackbar.make(view2,requireContext().getString(R.string.empty_cart), Snackbar.LENGTH_LONG).show()
+
                     }
                     2 -> {
                         val intent = Intent(requireContext(), SettingsActivity::class.java)

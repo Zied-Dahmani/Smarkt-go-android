@@ -2,6 +2,8 @@ package com.esprit.smarktgo.adapter
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ContentValues
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.model.Item
@@ -34,14 +37,15 @@ class UserAdapter(val mActivity: CartGroupActivity) : RecyclerView.Adapter<UserV
 
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        holder.imageV.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_baseline_person_24))
         holder.nameTV.text = list[position].fullName
+        if(mActivity.cartGroupViewModel.groupMembers.contains(list[position]))
+            holder.addUserCardView.isVisible = false
+        else
         holder.addUserCardView.setOnClickListener {
-            mActivity.addUser(list[position].id)
-            list.removeAt(position)
+            mActivity.cartGroupViewModel.addUser(list[position].id)
+            holder.addUserCardView.isVisible = false
             notifyDataSetChanged()
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -52,11 +56,9 @@ class UserAdapter(val mActivity: CartGroupActivity) : RecyclerView.Adapter<UserV
 
 class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val nameTV : TextView
-    val imageV : ImageView
     val addUserCardView : CardView
 
     init {
-        imageV = itemView.findViewById(R.id.userImage)
         nameTV = itemView.findViewById(R.id.userName)
         addUserCardView = itemView.findViewById(R.id.addUserCardView)
     }

@@ -73,12 +73,8 @@
     <string name="storage_required">Storage permission required!</string>
 
 
-
-
-
-
-
     <string name="chat">Chat</string>
+    <string name="member_added">Member added</string>
 
 
     <string name="mapbox_access_token">pk.eyJ1IjoibWlzbGVtIiwiYSI6ImNsYWxvc3p4NTA3ZW4zcXQ3djAyN2ppcGMifQ.JCoW7G8Ona4ivtAJVeJjmQ</string>

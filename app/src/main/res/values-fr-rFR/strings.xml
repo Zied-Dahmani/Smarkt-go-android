@@ -65,6 +65,7 @@
 
     <string name="yes">Oui</string>
     <string name="no">Non</string>
+
     <string name="please_wait">Veuillez patienter!</string>
     <string name="preparing_image">Traitement de l image </string>
     <string name="recognizing_text">Recupération du texte en cours</string>
@@ -74,8 +75,8 @@
     <string name="camera_required">Permission du caméra requise!</string>
     <string name="storage_required">Permission du stockage requise!</string>
 
-
     <string name="chat">Chat</string>
+    <string name="member_added">Membre ajouté</string>
 
     <string name="mapbox_access_token">pk.eyJ1IjoibWlzbGVtIiwiYSI6ImNsYWxvc3p4NTA3ZW4zcXQ3djAyN2ppcGMifQ.JCoW7G8Ona4ivtAJVeJjmQ</string>
 </resources>

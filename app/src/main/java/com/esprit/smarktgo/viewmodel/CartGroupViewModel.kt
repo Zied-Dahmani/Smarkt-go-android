@@ -6,27 +6,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.esprit.smarktgo.R
 import com.esprit.smarktgo.model.AddUser
 import com.esprit.smarktgo.model.GetOrder
 import com.esprit.smarktgo.model.User
 import com.esprit.smarktgo.repository.OrderRepository
 import com.esprit.smarktgo.repository.UserRepository
 import com.esprit.smarktgo.view.CartGroupActivity
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 
-class CartGroupViewModel(mActivity: CartGroupActivity): ViewModel() {
+class CartGroupViewModel(val mActivity: CartGroupActivity,val userId : String): ViewModel() {
 
-    private val mActivity = mActivity
-    lateinit var userId: String
     private lateinit var order : GetOrder
     private val orderRepository = OrderRepository()
     private val userRepository = UserRepository()
     private var usersLiveData = MutableLiveData<List<User>>()
-
+    lateinit var groupMembers: MutableList<User>
 
     init {
         getOrder()
@@ -34,20 +31,13 @@ class CartGroupViewModel(mActivity: CartGroupActivity): ViewModel() {
 
     private fun getOrder() {
         try {
-
-            val googleSignIn = GoogleSignIn.getLastSignedInAccount(mActivity)
-            userId = if (googleSignIn != null) {
-                googleSignIn.email!!
-            } else FirebaseAuth.getInstance().currentUser?.phoneNumber!!
-
             viewModelScope.launch {
                 val result = orderRepository.get(userId)
 
                 result?.let {
                     order = result
                     getUsers()
-                } ?: mActivity.showImage()
-
+                }
             }
         } catch (e: ApiException) {
             Log.w(ContentValues.TAG, e.statusCode.toString())
@@ -57,7 +47,9 @@ class CartGroupViewModel(mActivity: CartGroupActivity): ViewModel() {
     private fun getUsers() {
         try {
             viewModelScope.launch {
-                val result = userRepository.getUsers(order)
+                val result = userRepository.getAllUsers()
+                groupMembers = userRepository.getGroupMembers(order)!!
+
 
                 result?.let {
                     usersLiveData.value = result
@@ -76,7 +68,7 @@ class CartGroupViewModel(mActivity: CartGroupActivity): ViewModel() {
         viewModelScope.launch {
             val result = orderRepository.addUser(AddUser(userId,order.group))
             result?.let {
-                mActivity.showSnackBar("User added!")
+                mActivity.showSnackBar(mActivity.getString(R.string.member_added))
             }
         }
     }

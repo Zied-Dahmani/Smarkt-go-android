@@ -63,8 +63,11 @@ interface ApiInterface {
     @POST("ticket/update")
     suspend fun updateTicket(@Body updateTicket: UpdateTicket):Response<Ticket>
 
-    @POST("user/get")
-    suspend fun getUsers(@Body order:GetOrder):Response<MutableList<User>>
+    @POST("user/getGroupMembers")
+    suspend fun getGroupMembers(@Body order:GetOrder):Response<MutableList<User>>
+
+    @GET("user/getAllUsers")
+    suspend fun getAllUsers():Response<MutableList<User>>
 
     @POST("order/addUser")
     suspend fun addUser(@Body order:AddUser):Response<AddUser>
