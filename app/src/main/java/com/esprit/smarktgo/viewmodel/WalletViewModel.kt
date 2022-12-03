@@ -15,8 +15,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.esprit.smarktgo.R
@@ -111,7 +109,6 @@ class WalletViewModel(mActivity: WalletActivity): ViewModel() {
         mActivity.binding.codeContainer.error = errorText
     }
 
-
      private fun checkGalleryPermission():Boolean =  ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED
 
      private fun checkCameraPermission():Boolean {
@@ -161,16 +158,20 @@ class WalletViewModel(mActivity: WalletActivity): ViewModel() {
                 imageUri=data!!.data
                 recognizeTextFromImage()
             }
+
+            else {
+                showToast(mActivity.getString(R.string.selection_failed))
+            }
         }
 
     fun recognizeTextFromImage() {
         progressDialog.setTitle("Please wait")
         progressDialog.setCanceledOnTouchOutside(false)
-        progressDialog.setMessage("Preparing Image...")
+        progressDialog.setMessage(mActivity.getString(R.string.preparing_image))
         progressDialog.show()
         try {
             val inputImage = InputImage.fromFilePath(mActivity,imageUri!!)
-            progressDialog.setMessage("Recognizing text")
+            progressDialog.setMessage(mActivity.getString(R.string.recognizing_text))
             val textTaskResult = textRecognizer.process(inputImage)
                 .addOnSuccessListener { text ->
                     progressDialog.dismiss()
@@ -180,11 +181,11 @@ class WalletViewModel(mActivity: WalletActivity): ViewModel() {
                 .addOnFailureListener { e ->
                     progressDialog.dismiss()
                     Log.e("", e.message.toString())
-                    showToast("Failed to recognize text due to ${e.message}")
+                    showToast(mActivity.getString(R.string.recognizing_failed)+"${e.message}")
                 }
         } catch (e: Exception) {
             progressDialog.dismiss()
-            showToast("Failed to prepare image due to ${e.message}")
+            showToast(mActivity.getString(R.string.preparing_failed)+"${e.message}")
         }
     }
 

@@ -32,10 +32,10 @@ class WalletActivity : AppCompatActivity() {
         id = intent.getStringExtra("id")!!
         wallet = intent.getDoubleExtra("wallet", 0.0)
 
-
         binding.scanButton.setOnClickListener {
             walletViewModel.showInputImageDialog()
         }
+
 
         binding.code.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
@@ -47,6 +47,7 @@ class WalletActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             }
         })
+
     }
 
 
@@ -66,7 +67,7 @@ class WalletActivity : AppCompatActivity() {
                     if (cameraAccepted && storageAccepted) {
                         walletViewModel.pickImageCamera()
                     } else {
-                        walletViewModel.showToast("CAMERA PERMISSION REQUIRED")
+                        walletViewModel.showToast(this.getString(R.string.camera_required))
                     }
                 }
             }
@@ -77,7 +78,7 @@ class WalletActivity : AppCompatActivity() {
                         walletViewModel.pickImageGallery()
 
                     } else {
-                        walletViewModel.showToast("STORAGE PERMISSION IS REQUIRED")
+                        walletViewModel.showToast(this.getString(R.string.storage_required))
                     }
                 }
             }

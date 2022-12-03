@@ -65,6 +65,15 @@
 
     <string name="yes">Oui</string>
     <string name="no">Non</string>
+    <string name="please_wait">Veuillez patienter!</string>
+    <string name="preparing_image">Traitement de l image </string>
+    <string name="recognizing_text">Recupération du texte en cours</string>
+    <string name="recognizing_failed"> Echec de la récuperation </string>
+    <string name="preparing_failed">Echec de traitement de l image</string>
+    <string name="selection_failed">Veuillez selectionner une image!</string>
+    <string name="camera_required">Permission du caméra requise!</string>
+    <string name="storage_required">Permission du stockage requise!</string>
+
 
     <string name="chat">Chat</string>
 
