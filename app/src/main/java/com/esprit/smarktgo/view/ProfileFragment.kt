@@ -77,6 +77,11 @@ class ProfileFragment : Fragment() {
         }
         profileViewModel.initRecyclerView()
 
+ if (!profileViewModel.userId.contains("@"))
+ {
+     binding.userprofileImage.setImageResource(R.drawable.ic_baseline_person_24)
+ }
+
         profileAdapter.setOnItemClickListener(object : ProfileAdapter.onItemClickListener {
             override fun onItemClick(position: Int) {
                 when (position) {
