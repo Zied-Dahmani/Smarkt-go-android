@@ -91,6 +91,7 @@ class CartViewModel(cartFragment: CartFragment): ViewModel() {
             result.let {
                 mFragment.showOrderInfo(false)
                 mFragment.showImage()
+                mFragment.mainActivity.mainViewModel.orderId=""
                 deleteChat(result?.body()!!.id)
             }
         }

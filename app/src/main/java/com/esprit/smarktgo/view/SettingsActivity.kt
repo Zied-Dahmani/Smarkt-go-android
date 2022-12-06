@@ -33,7 +33,8 @@ class SettingsActivity : AppCompatActivity() {
             override fun onItemClick(position: Int) {
                 when (position) {
                     0 -> LanguagesDialog(this@SettingsActivity).show()
-                    1 -> logOutDialog()
+                    1 -> ContactDialog(this@SettingsActivity).show()
+                    2 -> logOutDialog()
                 }
             }
         })
@@ -41,7 +42,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun prepareRecyclerView() {
-        profileAdapter = ProfileAdapter(settingsViewModel.getList(),this)
+        profileAdapter = ProfileAdapter(settingsViewModel.getList())
         binding.rvItems.apply {
             adapter = profileAdapter
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL ,false)

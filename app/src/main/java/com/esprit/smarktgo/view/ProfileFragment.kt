@@ -88,20 +88,6 @@ class ProfileFragment : Fragment() {
                         startActivity(intent)
                     }
                     1 -> {
-                        if (profileViewModel.orderId.isNotEmpty())
-                        {
-                            val intent = Intent(requireContext(), ChatActivity::class.java).apply {
-                                putExtra("userName",binding.fullName.text)
-                                putExtra("orderId",profileViewModel.orderId)
-                                putExtra("userId",profileViewModel.userId)
-                            }
-                            startActivity(intent)
-                        }
-                        else
-                            Snackbar.make(view2,requireContext().getString(R.string.empty_cart), Snackbar.LENGTH_LONG).show()
-
-                    }
-                    2 -> {
                         val intent = Intent(requireContext(), SettingsActivity::class.java)
                         startActivity(intent)
                     }

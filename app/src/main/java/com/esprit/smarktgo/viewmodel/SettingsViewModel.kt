@@ -17,6 +17,7 @@ class SettingsViewModel(settingsActivity: SettingsActivity) : ViewModel() {
     fun getList(): ArrayList<ProfileItem> {
         val list = ArrayList<ProfileItem>()
         list.add(ProfileItem(mActivity.getString(R.string.languages), R.drawable.ic_baseline_language_24))
+        list.add(ProfileItem(mActivity.getString(R.string.contact), R.drawable.ic_baseline_contact_support_24))
         list.add(ProfileItem(mActivity.getString(R.string.log_out), R.drawable.ic_baseline_logout_24))
         return list
     }

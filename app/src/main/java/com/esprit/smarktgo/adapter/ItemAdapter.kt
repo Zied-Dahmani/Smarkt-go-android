@@ -48,8 +48,8 @@ class ItemAdapter(val itemsActivity: ItemsActivity?, val cartFragment: CartFragm
         holder.iconCardView.setOnClickListener {
                 if(itemsActivity!=null)
                 {
-                    itemsActivity?.orderDialog!!.item = list[position]
-                    itemsActivity?.orderDialog!!.show()
+                    itemsActivity.orderDialog.item = list[position]
+                    itemsActivity.orderDialog.show()
                 }
                 else
                     cartFragment!!.cartViewModel.removeItem(position)

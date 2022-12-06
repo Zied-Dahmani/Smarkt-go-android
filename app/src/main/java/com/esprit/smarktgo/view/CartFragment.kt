@@ -21,7 +21,7 @@ import com.esprit.smarktgo.viewmodel.CartViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 
-class CartFragment : Fragment() {
+class CartFragment(val mainActivity: MainActivity): Fragment() {
 
     lateinit var cartViewModel: CartViewModel
     lateinit var rv: RecyclerView

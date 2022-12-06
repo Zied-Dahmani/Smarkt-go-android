@@ -43,10 +43,8 @@
     <string name="log_out">Se déconnecter</string>
     <string name="fruits">Fruits</string>
     <string name="vegetables">Légumes</string>
-    <string name="dairy_products"> Produits
-    Laitiers</string>
-    <string name="baby_food"> Nourriture
-        pour bébés</string>
+    <string name="dairy_products"> Produits Laitiers</string>
+    <string name="baby_food"> Nourriture pour bébés</string>
     <string name="languages">Langues</string>
     <string name="english">🇺🇸 Anglais</string>
     <string name="french">🇫🇷 Français</string>
@@ -77,6 +75,8 @@
 
     <string name="chat">Chat</string>
     <string name="member_added">Membre ajouté</string>
+
+    <string name="contact">Contact</string>
 
     <string name="mapbox_access_token">pk.eyJ1IjoibWlzbGVtIiwiYSI6ImNsYWxvc3p4NTA3ZW4zcXQ3djAyN2ppcGMifQ.JCoW7G8Ona4ivtAJVeJjmQ</string>
 </resources>

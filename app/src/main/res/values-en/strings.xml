@@ -43,10 +43,8 @@
         <string name="log_out">Log out</string>
         <string name="fruits">Fruits</string>
         <string name="vegetables">Vegetables</string>
-        <string name="dairy_products"> Dairy
-    products</string>
-        <string name="baby_food"> Baby
-    food</string>
+        <string name="dairy_products"> Dairyproducts</string>
+        <string name="baby_food"> Baby food</string>
         <string name="languages">Languages</string>
         <string name="english">🇺🇸 English</string>
         <string name="french">🇫🇷 French</string>
@@ -76,7 +74,10 @@
         <string name="storage_required">Storage permission required!</string>
 
         <string name="chat">Chat</string>
-    <string name="member_added">Member added</string>
+        <string name="member_added">Member added</string>
+
+        <string name="contact">Contact</string>
+
 
 
     <string name="mapbox_access_token">pk.eyJ1IjoibWlzbGVtIiwiYSI6ImNsYWxvc3p4NTA3ZW4zcXQ3djAyN2ppcGMifQ.JCoW7G8Ona4ivtAJVeJjmQ</string>

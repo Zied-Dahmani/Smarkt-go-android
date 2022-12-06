@@ -12,10 +12,9 @@ import com.esprit.smarktgo.model.ProfileItem
 import com.esprit.smarktgo.view.SettingsActivity
 
 
-class ProfileAdapter(val list: List<ProfileItem>, activity: SettingsActivity?) : RecyclerView.Adapter<ProfileViewHolder>() {
+class ProfileAdapter(val list: List<ProfileItem>) : RecyclerView.Adapter<ProfileViewHolder>() {
 
     private lateinit var mListener : onItemClickListener
-    val mActivity = activity
 
     interface onItemClickListener{
         fun onItemClick(position: Int)
@@ -33,9 +32,6 @@ class ProfileAdapter(val list: List<ProfileItem>, activity: SettingsActivity?) :
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
         holder.image.setImageResource(list[position].image)
         holder.item.text = list[position].item
-        if(mActivity!=null)
-            holder.arrowIcon.isVisible= false
-
     }
 
     override fun getItemCount(): Int {
@@ -47,12 +43,10 @@ class ProfileAdapter(val list: List<ProfileItem>, activity: SettingsActivity?) :
 class ProfileViewHolder(itemView: View,listener: ProfileAdapter.onItemClickListener) : RecyclerView.ViewHolder(itemView) {
     val item : TextView
     val image : ImageView
-    val arrowIcon : ImageView
 
     init {
         image = itemView.findViewById(R.id.profileIcon)
         item = itemView.findViewById(R.id.profileItem)
-        arrowIcon = itemView.findViewById(R.id.arrowIcon)
         itemView.setOnClickListener {
             listener.onItemClick(adapterPosition)
         }

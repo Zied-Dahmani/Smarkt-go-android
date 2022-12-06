@@ -6,14 +6,14 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.esprit.smarktgo.R
 import com.esprit.smarktgo.databinding.ActivityMainBinding
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
+import com.esprit.smarktgo.viewmodel.MainViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
-    val favoritesFragment = FavoritesFragment()
+    private val favoritesFragment = FavoritesFragment()
+    lateinit var mainViewModel : MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,17 +21,34 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        mainViewModel = MainViewModel(this)
         replaceFragment(HomeFragment())
 
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId)
             {
                 R.id.home -> replaceFragment(HomeFragment())
-                R.id.cart -> replaceFragment(CartFragment())
+                R.id.cart -> replaceFragment(CartFragment(this))
+                R.id.chat -> replaceFragment(ChatFragment())
                 R.id.favorites -> replaceFragment(favoritesFragment)
                 R.id.profile -> replaceFragment(ProfileFragment())
-                else -> true
             }
+            true
+        }
+
+        binding.toolbar.setOnMenuItemClickListener {
+            mainViewModel.getOrder()
+            if (mainViewModel.orderId.isNotEmpty())
+            when(it.itemId) {
+                R.id.cartGroup -> {
+                    val intent = Intent(this, CartGroupActivity::class.java).apply {
+                        putExtra("userId",mainViewModel.userId)
+                    }
+                    startActivity(intent)
+                }
+            }
+            else
+                Snackbar.make(findViewById(R.id.mainActivityConstraintLayout),getString(R.string.empty_cart), Snackbar.LENGTH_LONG).show()
             true
         }
 
@@ -48,6 +65,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        if(binding.bottomNav.selectedItemId == R.id.home)
+            mainViewModel.getOrder()
         if(binding.bottomNav.selectedItemId == R.id.favorites)
             favoritesFragment.updateList()
         if(binding.bottomNav.selectedItemId == R.id.profile)

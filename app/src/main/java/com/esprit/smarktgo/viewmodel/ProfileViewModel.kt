@@ -29,7 +29,6 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
 
     fun setList(profileList: MutableList<ProfileItem>) {
         profileList.add(ProfileItem(mFragment.requireContext().getString(R.string.wallet), R.drawable.ic_baseline_wallet_24))
-        profileList.add(ProfileItem(mFragment.requireContext().getString(R.string.cart_group), R.drawable.ic_baseline_shopping_cart_24))
         profileList.add(ProfileItem(mFragment.requireContext().getString(R.string.settings), R.drawable.ic_baseline_settings_24))
     }
 
@@ -94,7 +93,7 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
 
      fun initRecyclerView() {
         setList(profileList)
-        mFragment.profileAdapter = ProfileAdapter(profileList,null)
+        mFragment.profileAdapter = ProfileAdapter(profileList)
         mFragment.myRecycler.apply {
             adapter = mFragment.profileAdapter
            layoutManager = LinearLayoutManager(mFragment.view?.context, LinearLayoutManager.VERTICAL, false)
