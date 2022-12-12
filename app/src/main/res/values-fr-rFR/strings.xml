@@ -77,6 +77,13 @@
     <string name="member_added">Membre ajouté</string>
 
     <string name="contact">Contact</string>
+    <string name="score">Score</string>
+    <string name="submit">Soumettre</string>
+    <string name="reviewdescription">Description</string>
+    <string name="reviewtitle">Titre</string>
+    <string name="review">Votre avis</string>
+    <string name="noreview">Pas d avis! Ajoutez le votre</string>
+
 
     <string name="mapbox_access_token">pk.eyJ1IjoibWlzbGVtIiwiYSI6ImNsYWxvc3p4NTA3ZW4zcXQ3djAyN2ppcGMifQ.JCoW7G8Ona4ivtAJVeJjmQ</string>
 </resources>

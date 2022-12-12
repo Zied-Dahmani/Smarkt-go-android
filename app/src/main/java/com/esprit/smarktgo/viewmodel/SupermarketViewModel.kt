@@ -9,9 +9,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.esprit.smarktgo.model.AddRemoveFavorite
-import com.esprit.smarktgo.model.IsFavoriteBody
+import com.esprit.smarktgo.model.*
+import com.esprit.smarktgo.repository.ReviewRepository
 import com.esprit.smarktgo.repository.SupermarketRepository
+import com.esprit.smarktgo.repository.UserRepository
 import com.esprit.smarktgo.view.FavoritesFragment
 import com.esprit.smarktgo.view.SupermarketActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -27,10 +28,19 @@ class SupermarketViewModel(supermarketActivity: SupermarketActivity): ViewModel(
     val mActivity = supermarketActivity
     var isFavorite = MutableLiveData<Boolean>()
     val supermarketRepository = SupermarketRepository()
+    val reviewRepository = ReviewRepository()
+    var reviewsLiveData = MutableLiveData<List<Review>>()
+    var reviewsLiveData2 = MutableLiveData<List<Review>>()
+    var userLiveData = MutableLiveData<User>()
+
+    private val userRepository: UserRepository = UserRepository()
 
     init {
         getCategories()
         isFavorite()
+        getSupermarketReviews(mActivity.supermarketId)
+        getSupermarketReviews2(mActivity.supermarketId)
+        getUserInfo()
     }
 
     private fun getCategories() {
@@ -92,6 +102,65 @@ class SupermarketViewModel(supermarketActivity: SupermarketActivity): ViewModel(
             Log.w(ContentValues.TAG, e.statusCode.toString())
         }
     }
+    fun submitReview(title:String,username:String,userId:String,supermarketName:String,supermarketId:String,description:String,rating:Float){
+        try {
+     viewModelScope.launch {
+      reviewRepository.submitReview(addReview(title,username,userId,supermarketName,supermarketId,description,rating))
+     }
+
+        }  catch(e:ApiException) {
+            Log.w(ContentValues.TAG, e.statusCode.toString())
+
+        }
+        }
+    fun getSupermarketReviews2(supermarketId:String){
+        try {
+            viewModelScope.launch {
+                val reviews=    reviewRepository.getSupermarketReviews(supermarketId)
+
+                reviews.let {
+                    reviewsLiveData2.value = reviews
+                }
+            }
+
+        }  catch(e:ApiException) {
+            Log.w(ContentValues.TAG, e.statusCode.toString())
+
+        }
+    }
+     fun getSupermarketReviews(supermarketId:String){
+         try {
+             viewModelScope.launch {
+             val reviews=    reviewRepository.getSupermarketReviews(supermarketId)
+
+                 reviews.let {
+                     reviewsLiveData.value = reviews
+                 }
+             }
+
+         }  catch(e:ApiException) {
+             Log.w(ContentValues.TAG, e.statusCode.toString())
+
+         }
+     }
+    private fun getUserInfo() {
+        val user = User(userId, "", wallet = 0.0)
+        try {
+            viewModelScope.launch {
+                val data = userRepository.signIn(user)
+                data?.let {
+                    userLiveData.value = data
+                }
+            }
+        } catch (e: ApiException) {
+            Log.w(ContentValues.TAG, e.statusCode.toString())
+        }
+    }
+    fun observeUser(): LiveData<User> = userLiveData
+
+    fun observeReviews() : LiveData<List<Review>> = reviewsLiveData
+
+    fun observeReviews2() : LiveData<List<Review>> = reviewsLiveData2
 
     fun observeCategoriesLiveData() : LiveData<List<String>> = categoriesLiveData
 

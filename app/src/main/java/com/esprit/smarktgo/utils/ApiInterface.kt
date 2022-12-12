@@ -72,6 +72,13 @@ interface ApiInterface {
     @POST("order/addUser")
     suspend fun addUser(@Body order:AddUser):Response<AddUser>
 
+    @POST("review/create")
+    suspend fun submitReview(@Body review:addReview):Response<addReview>
+
+    @POST("review/")
+    suspend fun getSupermarketReviews(@Body supermarketReview: SupermarketReview):Response<MutableList<Review>>
+
+
 }
 
 
