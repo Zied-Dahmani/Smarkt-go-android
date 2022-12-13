@@ -13,10 +13,7 @@ import com.esprit.smarktgo.R
 import com.esprit.smarktgo.adapter.CategoryAdapter
 import com.esprit.smarktgo.adapter.ReviewAdapter
 import com.esprit.smarktgo.databinding.ActivitySupermarketBinding
-import com.esprit.smarktgo.model.Item
-import com.esprit.smarktgo.model.Review
 import com.esprit.smarktgo.utils.RetrofitInstance.BASE_URL
-import com.esprit.smarktgo.viewmodel.ProfileFragmentViewModel
 import com.esprit.smarktgo.viewmodel.SupermarketViewModel
 
 
@@ -52,7 +49,6 @@ private lateinit var fullname:String
         binding.supermarketName.text = name
         binding.supermarketAddress.text=address
         binding.supermarketDescription.text=description
-
         prepareRecyclerView()
         prepareRecyclerView2()
         supermarketViewModel = SupermarketViewModel(this)
@@ -93,13 +89,14 @@ private lateinit var fullname:String
         })
 
         binding.submitReview.setOnClickListener {
-            supermarketViewModel.submitReview(binding.Title.text.toString(),fullname,supermarketViewModel.userId,name,supermarketId,binding.Description.text.toString(),binding.ratingBar.rating)
-            finish()
-            startActivity(intent)
+            supermarketViewModel.submitReview(binding.Title.text.toString(),fullname,supermarketViewModel.userId,name,supermarketId,binding.Description.text.toString(),binding.ratingBar.rating, fun()
+            {
+                supermarketViewModel.getSupermarketReviews(supermarketId)
+
+            })
+          binding.noreview.isVisible=false
+            clearFields()
                }
-
-
-
     }
 
     private fun prepareRecyclerView() {
@@ -131,6 +128,12 @@ private lateinit var fullname:String
         val labelLocation = name
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:<$supermarketLatitude>,<$supermarketLongitude>?q=<$supermarketLatitude>,<$supermarketLongitude>($labelLocation)"))
         startActivity(intent)
+    }
+    private fun clearFields()
+    {
+        binding.Title.setText("")
+        binding.Description.setText("")
+        binding.ratingBar.rating=0F
     }
 
 

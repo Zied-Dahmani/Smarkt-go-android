@@ -1,10 +1,7 @@
 package com.esprit.smarktgo.viewmodel
 
 import android.content.ContentValues
-import android.content.Intent
-import android.net.Uri
 import android.util.Log
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +10,6 @@ import com.esprit.smarktgo.model.*
 import com.esprit.smarktgo.repository.ReviewRepository
 import com.esprit.smarktgo.repository.SupermarketRepository
 import com.esprit.smarktgo.repository.UserRepository
-import com.esprit.smarktgo.view.FavoritesFragment
 import com.esprit.smarktgo.view.SupermarketActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
@@ -30,7 +26,6 @@ class SupermarketViewModel(supermarketActivity: SupermarketActivity): ViewModel(
     val supermarketRepository = SupermarketRepository()
     val reviewRepository = ReviewRepository()
     var reviewsLiveData = MutableLiveData<List<Review>>()
-    var reviewsLiveData2 = MutableLiveData<List<Review>>()
     var userLiveData = MutableLiveData<User>()
 
     private val userRepository: UserRepository = UserRepository()
@@ -39,7 +34,6 @@ class SupermarketViewModel(supermarketActivity: SupermarketActivity): ViewModel(
         getCategories()
         isFavorite()
         getSupermarketReviews(mActivity.supermarketId)
-        getSupermarketReviews2(mActivity.supermarketId)
         getUserInfo()
     }
 
@@ -102,37 +96,30 @@ class SupermarketViewModel(supermarketActivity: SupermarketActivity): ViewModel(
             Log.w(ContentValues.TAG, e.statusCode.toString())
         }
     }
-    fun submitReview(title:String,username:String,userId:String,supermarketName:String,supermarketId:String,description:String,rating:Float){
+    fun submitReview(
+        title: String,
+        username: String,
+        userId: String,
+        supermarketName: String,
+        supermarketId: String,
+        description: String,
+        rating: Float,
+        function: () -> Unit
+    ){
         try {
      viewModelScope.launch {
       reviewRepository.submitReview(addReview(title,username,userId,supermarketName,supermarketId,description,rating))
+         function()
      }
-
         }  catch(e:ApiException) {
             Log.w(ContentValues.TAG, e.statusCode.toString())
-
         }
         }
-    fun getSupermarketReviews2(supermarketId:String){
-        try {
-            viewModelScope.launch {
-                val reviews=    reviewRepository.getSupermarketReviews(supermarketId)
 
-                reviews.let {
-                    reviewsLiveData2.value = reviews
-                }
-            }
-
-        }  catch(e:ApiException) {
-            Log.w(ContentValues.TAG, e.statusCode.toString())
-
-        }
-    }
      fun getSupermarketReviews(supermarketId:String){
          try {
              viewModelScope.launch {
              val reviews=    reviewRepository.getSupermarketReviews(supermarketId)
-
                  reviews.let {
                      reviewsLiveData.value = reviews
                  }
@@ -159,8 +146,6 @@ class SupermarketViewModel(supermarketActivity: SupermarketActivity): ViewModel(
     fun observeUser(): LiveData<User> = userLiveData
 
     fun observeReviews() : LiveData<List<Review>> = reviewsLiveData
-
-    fun observeReviews2() : LiveData<List<Review>> = reviewsLiveData2
 
     fun observeCategoriesLiveData() : LiveData<List<String>> = categoriesLiveData
 
