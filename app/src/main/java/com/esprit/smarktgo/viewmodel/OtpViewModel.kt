@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.launch
+import java.util.Random
 
 
 class OtpViewModel( otpActivity: OtpActivity): ViewModel() {
@@ -56,11 +57,12 @@ class OtpViewModel( otpActivity: OtpActivity): ViewModel() {
         try {
             val account = auth.currentUser
             val user = User(account?.phoneNumber.toString(), "", 0.0)
-
+            val random = Random()
+            val randomNumber: Int = random.nextInt(900) + 100
             viewModelScope.launch {
                 val signInResult = userRepository.signIn(user)
                 if (signInResult==null) {
-                    val signUpResult = userRepository.signUp(user)
+                    val signUpResult = userRepository.signUp(User(account?.phoneNumber.toString(), "RandomUser$randomNumber", 0.0))
                     if (signUpResult!=null)
                         mActivity.navigate(true)
                     else

@@ -3,6 +3,7 @@ package com.esprit.smarktgo.view
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.esprit.smarktgo.R
 import com.esprit.smarktgo.adapter.ProfileAdapter
 import com.esprit.smarktgo.databinding.FragmentProfileBinding
 import com.esprit.smarktgo.databinding.NameDialogBinding
+import com.esprit.smarktgo.utils.RetrofitInstance
 import com.esprit.smarktgo.viewmodel.ProfileFragmentViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.material.snackbar.Snackbar
@@ -57,6 +59,14 @@ class ProfileFragment : Fragment() {
             binding.walletDisplay.text = wd
 
         })
+        binding.editphoto.visibility=View.INVISIBLE
+binding.editphoto.setOnClickListener {
+
+profileViewModel.pickImageGallery()
+}
+
+
+
         binding.editname.setOnClickListener {
             dialogView = inflater.inflate(R.layout.name_dialog, container, false)
             val nameDialogBinding = NameDialogBinding.bind(dialogView)
@@ -79,7 +89,10 @@ class ProfileFragment : Fragment() {
 
  if (!profileViewModel.userId.contains("@"))
  {
-     binding.userprofileImage.setImageResource(R.drawable.ic_baseline_person_24)
+     Glide.with(this.requireActivity())
+         .load(RetrofitInstance.BASE_URL +"img/" +"person.png")
+         .circleCrop()
+         .into(binding.userprofileImage)
  }
 
         profileAdapter.setOnItemClickListener(object : ProfileAdapter.onItemClickListener {

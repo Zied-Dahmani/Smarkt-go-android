@@ -1,7 +1,16 @@
 package com.esprit.smarktgo.viewmodel
 
+import android.Manifest
+import android.app.Activity
 import android.content.ContentValues
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.util.Log
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -37,10 +46,13 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
     private val userRepository: UserRepository = UserRepository()
     private val orderRepository: OrderRepository = OrderRepository()
     var userId: String
+    var storagePermissions:Array<String>
+    var imageUri: Uri?=null
 
     var orderId = ""
 
     init {
+        storagePermissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         val googleSignIn = GoogleSignIn.getLastSignedInAccount(mFragment.requireContext())
         userId = if(googleSignIn!=null) {
             googleSignIn.email!!
@@ -115,6 +127,32 @@ class ProfileFragmentViewModel(profileFragment: ProfileFragment) : ViewModel() {
         } catch (e: ApiException) {
             Log.w(ContentValues.TAG, e.statusCode.toString())
         }
+    }
+
+    private val galleryActivityResultLauncher =
+        mFragment.registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result->
+            if (result.resultCode== Activity.RESULT_OK)
+            {
+                val data=result.data
+                imageUri=data!!.data
+            }
+
+            else {
+                showToast(mFragment.getString(R.string.selection_failed))
+            }
+        }
+    fun pickImageGallery(){
+        val intent= Intent(Intent.ACTION_PICK)
+        intent.type="image/*"
+        galleryActivityResultLauncher.launch(intent)
+    }
+    private fun requestGalleryPermission(){
+        ActivityCompat.requestPermissions(mFragment.requireActivity(),storagePermissions,STORAGE_REQUEST_CODE)
+    }
+    private fun checkGalleryPermission():Boolean =  ContextCompat.checkSelfPermission(mFragment.requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED
+
+    fun showToast(message:String){
+        Toast.makeText(mFragment.requireActivity(),message, Toast.LENGTH_SHORT).show()
     }
 
 }
